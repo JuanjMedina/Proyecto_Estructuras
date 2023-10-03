@@ -1,21 +1,19 @@
+"use strict";
 // import { doubleLinkedList } from '../doubleLinkedList/doubleLinkedLIst'
-// class Queue<T> {
+// class Stack<T> {
 //   list = new doubleLinkedList<T>()
-
-//   enqueue (value: T): void {
+//   push (value: T): void {
 //     this.list.addEnd(value)
 //   }
-
-//   dequeue (): T {
+//   pop (): T {
 //     if (this.list.isEmpty()) {
 //       throw new Error('No hay elementos en la cola')
 //     }
-//     const valueNodeHead = this.list.head!.value
-//     this.list.head = this.list.head!.next
+//     const valueNodeTail = this.list.tail.value
+//     this.list.tail = this.list.tail.prev
 //     this.list.size--
-//     return valueNodeHead
+//     return valueNodeTail
 //   }
-
 //   size (): number {
 //     return this.list.size
 //   }
