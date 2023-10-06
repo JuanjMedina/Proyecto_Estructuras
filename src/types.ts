@@ -4,3 +4,7 @@ export interface Notes {
   descripcion: string
   fecha: string
 }
+
+export interface NotesModel {
+  getAllNotes: () => Promise<Notes[]>
+}
