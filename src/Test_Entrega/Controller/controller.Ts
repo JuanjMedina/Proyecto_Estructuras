@@ -31,12 +31,19 @@ export const stackFunction = (_req: Request, res: Response) => {
     historial.push(changes)
   }
 
-  /*const buscarCambioTipo = (historial: Stack<cambio>) => {
+  const buscarCambioTipo = (historial: Stack<cambio>, tipoBuscado: cambioCosas) =>  {
+    const cambiosDelTipoBuscado = new DoubleLinkedList
     const historialTemp = new Stack();
     while (historial.size() != 0){
-        
+        const cambio = historial.pop();
+        historialTemp.push(cambio);
+        if (cambio.cambios === tipoBuscado) {
+            cambiosDelTipoBuscado.addEnd(cambio);
+        } 
     }
-  }*/
+
+    return cambiosDelTipoBuscado
+  }
 
   for (let index = 0; index < objects; index++) { // hacemos pop de todos los elementos en historial
     historial.pop();

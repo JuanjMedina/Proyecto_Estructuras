@@ -31,8 +31,9 @@ export class notesModel {
 
   static async createUser ({ data }: { data: UserModel }): Promise<any> {
     const { name, email, telefono } = data
-    const connectiondb = await connect()
-    console.log(name, email, telefono)
+    // const connectiondb = await connect()
+    // console.log(name, email, telefono)
+    return [name, email, telefono]
   }
 
   static async getAllUser (): Promise<void> {
