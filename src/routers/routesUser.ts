@@ -11,11 +11,11 @@ export const createUserRouter = ({
 
   notesRouter.get('/', userController.getAllUser)
 
-  notesRouter.post('/create', userController.CreateUser)
+  notesRouter.post('/', userController.CreateUser)
 
   notesRouter.get('/:id')
 
-  notesRouter.delete('/:id')
+  notesRouter.delete('/:id', userController.deleteUser)
 
   return notesRouter
 }

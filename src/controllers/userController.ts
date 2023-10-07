@@ -15,4 +15,10 @@ export class UserController {
     const allUsers = await this.notesModel.getAllUser()
     res.status(200).json(allUsers)
   }
+
+  deleteUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    await this.notesModel.deleteUser({ id })
+    res.status(200).json({ message: 'User deleted' })
+  }
 }

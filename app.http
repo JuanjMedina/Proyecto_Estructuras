@@ -4,13 +4,14 @@ GET http://localhost:1234/notes
 GET http://localhost:3000/user/
 
 ### crear usuario
-POST http://localhost:3000/user/create
-
+POST http://localhost:3000/user/
 Content-Type: application/json
 
 {
-    "name": "nombre",
-    "email": "email",
+    "name": "Pablo",
+    "email": "Pedro@gmail.com",
     "telefono": 213131331
 }
 
+### Eliminar un usuario
+DELETE http://localhost:3000/user/66b7d899-651e-11ee-ad06-204ef64c69c6

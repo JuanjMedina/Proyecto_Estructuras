@@ -1,6 +1,6 @@
 import mysql, { Connection } from 'mysql2/promise'
 
-import { UserModel } from '../../types'
+import { UUID, UserModel } from '../../types'
 
 const DEFAULT_CONFIG = {
   host: 'localhost',
@@ -31,20 +31,49 @@ export class notesModel {
 
   static async createUser ({ data }: { data: UserModel }): Promise<any> {
     const { name, email, telefono } = data
-    // const connectiondb = await connect()
-    // console.log(name, email, telefono)
-    return [name, email, telefono]
+    const connectiondb = await connect()
+
+    const [uuidResult]: any = await connectiondb?.query('select uuid() uuid')
+    const [{ uuid }] = uuidResult
+    try {
+      await connectiondb?.query(
+        'insert into task_glide.usuarios values (UUID_TO_BIN(?),?,?,?)',
+        [uuid, name, email, telefono]
+      )
+    } catch (e) {
+      throw new Error('Error al crear el usuario')
+    }
+    const [result]: any = await connectiondb?.query(
+      'select  nombre , email ,telefono from task_glide.usuarios;'
+    )
+    return result
   }
 
   static async getAllUser (): Promise<void> {
     const connectiondb = await connect()
     try {
-      const [result]: any = await connectiondb?.query(
-        'select  nombre , email ,telefono from task_glide.usuarios;'
+      const [result] = await connectiondb?.query(
+        'select  BIN_TO_UUID(id_usuario) id_usuario,nombre , email ,telefono from task_glide.usuarios;'
       )
-      return result[0]
+      return result
     } catch (e) {
       throw new Error('Error al consultar el usuario')
     }
+  }
+
+  static async deleteUser ({ id }: { id: UUID }): Promise<void> {
+    const connectiondb = await connect()
+    try {
+      await connectiondb?.query(
+        'delete from task_glide.usuarios where usuarios.id_usuario = UUID_TO_BIN(?)',
+        id
+      )
+    } catch (e) {
+      throw new Error('Error al eliminar el usuario')
+    }
+    const [result]: any = await connectiondb?.query(
+      'select  nombre , email ,telefono from task_glide.usuarios;'
+    )
+    return result
   }
 }
