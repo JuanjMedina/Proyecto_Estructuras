@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import cors from 'cors'
 import { createNotesRouter } from './routers/router'
+import { createTestRouter } from './Test_Entrega/routerTest'
 
 export const createApp = ({ notesModel }: { notesModel: any }): void => {
   const app = express()
@@ -12,6 +13,7 @@ export const createApp = ({ notesModel }: { notesModel: any }): void => {
   const PORT = process.env.PORT ?? 3000
 
   app.use('/notes', createNotesRouter({ notesModel }))
+  app.use('/test', createTestRouter)
 
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)

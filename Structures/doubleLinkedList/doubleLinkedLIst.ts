@@ -1,43 +1,47 @@
-class node<T> {
+class Node<T> {
   value: T
-  next: node<T> | null
-  prev: node<T> | null
-  constructor(value: T) {
+  next: Node<T> | null
+  prev: Node<T> | null
+  constructor (value: T) {
     this.value = value
     this.next = null
     this.prev = null
   }
 }
 
-export class doubleLinkedList<T> {
-  head: node<T> | null
-  tail: node<T> | null
+export class DoubleLinkedList<T> {
+  head: Node<T> | null
+  tail: Node<T> | null
   size: number
 
-  constructor() {
+  constructor () {
     this.head = null
     this.tail = null
     this.size = 0
   }
 
-  isEmpty(): boolean {
-    return this.size == 0
+  isEmpty (): boolean {
+    return this.size === 0
   }
 
-  addEnd(value: T): void {
-    const newNode = new node<T>(value)
+  addEnd (value: T): void {
+    const newNode = new Node<T>(value)
     if (this.isEmpty()) {
       this.head = newNode
       this.tail = newNode
     } else {
-      newNode.prev = this.tail
-      this.tail!.next = newNode 
-      this.tail = newNode
+      if (this.tail != null) {
+        newNode.prev = this.tail
+        this.tail.next = newNode
+        this.tail = newNode
+      } else {
+        throw new Error('Double LinkedList is empty')
+      }
     }
     this.size++
   }
 
-  Size(): number {
+  Size (): number {
     return this.size
   }
 }

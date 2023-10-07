@@ -5,7 +5,7 @@ const DEFAULT_CONFIG = {
   port: 3306,
   user: 'root',
   password: 'root',
-  database: 'notes'
+  database: 'task_glide'
 }
 
 const CONNECTION_DATA = DEFAULT_CONFIG
@@ -17,28 +17,6 @@ const connect = async (): Promise<Connection | undefined> => {
     console.log(error)
   }
 }
-
-// const runQuery = async (query: string): Promise<any[] | undefined> => { //! Cambiar any por el tipo de datos que se espera de la base de datos
-//   const connectiondb = await connect()
-//   if (connectiondb != null) {
-//     try {
-//       const result = await connectiondb.query(query)
-//       return result
-//     } catch (error) {
-//       throw new Error(' Error al ejecutar la consulta')
-//     }
-//   }
-// }
-
-// export class notesModel {
-//   static async getAllNotes (): Promise<any> {
-//     const query = 'SELECT * FROM notas'
-//     const result = await runQuery(query)
-//     if (result != null) {
-//       return result[0]
-//     }
-//   }
-// }
 
 export class notesModel {
   static async getAllNotes (): Promise<any> {
