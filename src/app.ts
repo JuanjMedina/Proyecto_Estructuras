@@ -12,6 +12,7 @@ export const createApp = ({ notesModel }: { notesModel: any }): void => {
   app.use(json())
 
   const PORT = process.env.PORT ?? 3000
+
   app.use('/user', createUserRouter({ notesModel }))
 
   app.use('/notes', createNotesRouter({ notesModel }))

@@ -15,3 +15,10 @@ export interface UserModel {
   email: string
   telefono: number
 }
+
+export interface UserInterface {
+  id_usuario: UUID
+  nombre: string
+  email: string
+  telefono: number
+}
