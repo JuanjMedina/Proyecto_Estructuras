@@ -16,7 +16,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "prod": "node --max-old-space-size=6144 index.js",
+    "prod": "node --max-old-space-size=8192 index.js",
     "dev": "ts-node-dev src/server-with-local.ts",
     "start": "node build/app.js",
     "tsc": "tsc",

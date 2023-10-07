@@ -1,5 +1,7 @@
 import mysql, { Connection } from 'mysql2/promise'
 
+import { UserModel } from '../../types'
+
 const DEFAULT_CONFIG = {
   host: 'localhost',
   port: 3306,
@@ -24,6 +26,24 @@ export class notesModel {
     const result = await connectiondb?.query('select * from notas')
     if (result != null) {
       return result[0]
+    }
+  }
+
+  static async createUser ({ data }: { data: UserModel }): Promise<any> {
+    const { name, email, telefono } = data
+    const connectiondb = await connect()
+    console.log(name, email, telefono)
+  }
+
+  static async getAllUser (): Promise<void> {
+    const connectiondb = await connect()
+    try {
+      const [result]: any = await connectiondb?.query(
+        'select  nombre , email ,telefono from task_glide.usuarios;'
+      )
+      return result[0]
+    } catch (e) {
+      throw new Error('Error al consultar el usuario')
     }
   }
 }

@@ -2,6 +2,7 @@ import express, { json } from 'express'
 import cors from 'cors'
 import { createNotesRouter } from './routers/router'
 import { createTestRouter } from './Test_Entrega/routerTest'
+import { createUserRouter } from './routers/routesUser'
 
 export const createApp = ({ notesModel }: { notesModel: any }): void => {
   const app = express()
@@ -11,8 +12,10 @@ export const createApp = ({ notesModel }: { notesModel: any }): void => {
   app.use(json())
 
   const PORT = process.env.PORT ?? 3000
+  app.use('/user', createUserRouter({ notesModel }))
 
   app.use('/notes', createNotesRouter({ notesModel }))
+
   app.use('/test', createTestRouter)
 
   app.listen(PORT, () => {

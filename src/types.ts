@@ -8,3 +8,9 @@ export interface Notes {
 export interface NotesModel {
   getAllNotes: () => Promise<Notes[]>
 }
+
+export interface UserModel {
+  name: string
+  email: string
+  telefono: number
+}
