@@ -6,9 +6,9 @@ export class FolderController {
     this.notesModel = notesModel
   }
 
-  CreateUser = async (req: Request, res: Response): Promise<void> => {}
+  CreateUser = async (_req: Request, _res: Response): Promise<void> => {}
 
-  getAllUser = async (_req: Request, res: Response): Promise<void> => {}
+  getAllUser = async (_req: Request, _res: Response): Promise<void> => {}
 
-  deleteUser = async (req: Request, res: Response): Promise<void> => {}
+  deleteUser = async (_req: Request, _res: Response): Promise<void> => {}
 }

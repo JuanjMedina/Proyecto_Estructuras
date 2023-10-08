@@ -1,8 +1,9 @@
 export interface Notes {
-  idNota: number
+  idNota: string
   titulo: string
   descripcion: string
   fecha: string
+  fechaEliminacion: string | null
 }
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
 

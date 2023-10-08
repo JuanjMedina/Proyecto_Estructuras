@@ -20,4 +20,11 @@ export class Queue<T> {
   size (): number {
     return this.list.size
   }
+
+  peek (): T {
+    if (this.list.head == null) {
+      throw new Error('No hay elementos en la cola')
+    }
+    return this.list.head.value
+  }
 }
