@@ -7,4 +7,4 @@ createTestRouter.get('/stack', stackFunction)
 
 createTestRouter.get('/queue', queueFunction)
 
-createTestRouter.get('/doubleLinkedList', doubleLinkedListFunction)
+createTestRouter.get('/doubleLinkedList', doubleLinkedListFunction) a
