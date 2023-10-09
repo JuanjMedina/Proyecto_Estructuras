@@ -123,11 +123,11 @@ export const queueFunction = (_req: Request, res: Response) => {
 
 export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   class Folder {
-    DoubleLinkedList = new DoubleLinkedList<number>()
+    DoubleLinkedList = new DoubleLinkedList<Notes>()
 
-    addLinkedList(number: number) { // Nota: Notes
-      // this.DoubleLinkedList.addEnd(Nota)
-      this.DoubleLinkedList.addEnd(number)
+    addLinkedList(Nota:Notes) { // Nota: Notes
+      this.DoubleLinkedList.addEnd(Nota)
+      // this.DoubleLinkedList.addEnd(number)
     }
 
     changePosition(inicialPos: number, finalPos: number) {
@@ -142,31 +142,31 @@ export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   }
 
   let start = Date.now()
-  let objectData = 1000000
+  let objectData = 100000
 
-  // const crearNotas = (): Notes => {
-  //   const nota: Notes = {
-  //     idNota: uuidv4(),
-  //     titulo: 'Nota de prueba',
-  //     descripcion: 'Esta es una nota de prueba',
-  //     fecha: '2023-10-08',
-  //     fechaEliminacion: null // Inicialmente no está en la papelera
-  //   }
-  //   return nota
-  // }
-
-  const genNumberTest = (): number => {
-    const randomDecimal = Math.random()
-    const randomNumber = Math.floor(randomDecimal * 100) + 1
-    return randomNumber
+  const crearNotas = (): Notes => {
+    const nota: Notes = {
+      idNota: uuidv4(),
+      titulo: 'Nota de prueba',
+      descripcion: 'Esta es una nota de prueba',
+      fecha: '2023-10-08',
+      fechaEliminacion: null // Inicialmente no está en la papelera
+    }
+    return nota
   }
+
+  // const genNumberTest = (): number => {
+  //   const randomDecimal = Math.random()
+  //   const randomNumber = Math.floor(randomDecimal * 100) + 1
+  //   return randomNumber
+  // }
 
   const folder = new Folder()
 
   for (let index = 1; index < objectData; index++) {
-    // const nota = crearNotas()
-    const number = genNumberTest()
-    folder.addLinkedList(number)
+    const nota = crearNotas()
+    // const number = genNumberTest()
+    folder.addLinkedList(nota)
   }
 
   for (let index = 0; index < objectData / 2; index++) {

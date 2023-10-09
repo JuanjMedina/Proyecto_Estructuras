@@ -6,9 +6,25 @@ export class FolderController {
     this.notesModel = notesModel
   }
 
-  CreateUser = async (_req: Request, _res: Response): Promise<void> => {}
+  createFolder = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const allFolder = await this.notesModel.createFolder({ data: req.body })
+      res.status(200).json(allFolder)
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
+    }
+  }
 
-  getAllUser = async (_req: Request, _res: Response): Promise<void> => {}
+  getAllFolders = async (_req: Request, res: Response): Promise<void> => {
+    try {
+      const allFolder = await this.notesModel.getAllFolders()
+      res.status(200).json(allFolder)
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
+    }
+  }
 
-  deleteUser = async (_req: Request, _res: Response): Promise<void> => {}
+  deleteFolder = async (_req: Request, _res: Response): Promise<void> => {
+
+  }
 }

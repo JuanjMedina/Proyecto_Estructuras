@@ -1,6 +1,5 @@
 import mysql, { Connection } from 'mysql2/promise'
-
-import { UUID, UserModel } from '../../types'
+import { UUID, UserModel, FolderModel, NoteModel } from '../../types'
 import { RowDataPacket } from 'mysql2'
 
 const DEFAULT_CONFIG = {
@@ -22,15 +21,11 @@ const connect = async (): Promise<Connection | undefined> => {
 }
 
 export class notesModel {
-  static async getAllNotes (): Promise<any> {
-    const connectiondb = await connect()
-    const result = await connectiondb?.query('select * from notas')
-    if (result != null) {
-      return result[0]
-    }
-  }
-
-  static async createUser ({ data }: { data: UserModel }): Promise<RowDataPacket[][]> {
+  static async createUser ({
+    data
+  }: {
+    data: UserModel
+  }): Promise<RowDataPacket[][]> {
     const { name, email, telefono } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -86,6 +81,75 @@ export class notesModel {
       return result
     } else {
       throw new Error('error al conectar con la base de datos')
+    }
+  }
+
+  static async getAllFolders (): Promise<RowDataPacket[][]> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string = 'select * from task_glide.carpetas;'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        return result
+      } catch (e) {
+        throw new Error('Error al consultar las carpetas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async createFolder ({ data }: { data: FolderModel }): Promise<void> {
+    const { nombre } = data
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'insert into task_glide.carpetas (nombre_carpeta) values (?) '
+        await connectiondb.query<RowDataPacket[][]>(query, nombre)
+      } catch (e) {
+        throw new Error('Error al crear la carpeta')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async createNote ({ data }: { data: NoteModel }): Promise<void> {
+    const { temaNota, fechaNota, descripcionNota, idCarpeta } = data
+    const connectiondb = await connect()
+
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'insert into task_glide.notas (tema_nota,fecha_nota,descripcion_nota,id_carpeta) values (?,?,?,?);'
+        await connectiondb.query(query, [
+          temaNota,
+          fechaNota,
+          descripcionNota,
+          idCarpeta
+        ])
+      } catch (e) {
+        throw new Error('Error al crear la nota')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async getAllNotes (): Promise<RowDataPacket[][]> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'select * from task_glide.notas;'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        return result
+      } catch (e) {
+        throw new Error('Error al consultar las notas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
     }
   }
 }

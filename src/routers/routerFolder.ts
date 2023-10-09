@@ -7,16 +7,16 @@ export const createFolderRouter = ({
 }: {
   notesModel: any
 }): Router => {
-  const userController = new FolderController({ notesModel })
+  const folderController = new FolderController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.get('/', userController.getAllUser)
+  notesRouter.get('/', folderController.getAllFolders)
 
-  notesRouter.post('/', userController.CreateUser)
+  notesRouter.post('/', folderController.createFolder)
 
   notesRouter.get('/:id')
 
-  notesRouter.delete('/:id', userController.deleteUser)
+  notesRouter.delete('/:id', folderController.deleteFolder)
 
   return notesRouter
 }

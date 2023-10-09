@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
-import { NotesController } from '../controllers/Controller'
+import { NotesController } from '../controllers/notesController'
 
 export const createNotesRouter = ({
   notesModel
@@ -9,9 +10,9 @@ export const createNotesRouter = ({
   const notesController = new NotesController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.get('/', notesController.getNotes)
+  notesRouter.get('/', notesController.getAllNotes)
 
-  notesRouter.post('/')
+  notesRouter.post('/', notesController.createNote)
 
   notesRouter.get('/:id')
 

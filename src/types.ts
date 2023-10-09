@@ -23,3 +23,15 @@ export interface UserInterface {
   email: string
   telefono: number
 }
+
+export interface FolderModel {
+  nombre: string
+  idUsuario: UUID
+}
+
+export interface NoteModel {
+  temaNota: string
+  fechaNota: string
+  descripcionNota: string
+  idCarpeta: number
+}
