@@ -24,5 +24,11 @@ class Queue {
     size() {
         return this.list.size;
     }
+    peek() {
+        if (this.list.head == null) {
+            throw new Error('No hay elementos en la cola');
+        }
+        return this.list.head.value;
+    }
 }
 exports.Queue = Queue;

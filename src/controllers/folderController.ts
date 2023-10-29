@@ -24,7 +24,13 @@ export class FolderController {
     }
   }
 
-  deleteFolder = async (_req: Request, _res: Response): Promise<void> => {
-
+  deleteFolder = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    try {
+      await this.notesModel.deleteFolder({ id })
+      res.status(200).json({ message: 'folder deleted' })
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
+    }
   }
 }

@@ -8,8 +8,8 @@ POST http://localhost:3000/user/
 Content-Type: application/json
 
 {
-    "name": "Pablo",
-    "email": "Pedro@gmail.com",
+    "name": "Juan",
+    "email": "Juan@Unal.edu.co",
     "telefono": 213131331
 }
 
@@ -21,12 +21,15 @@ POST http://localhost:3000/folders/
 Content-Type: application/json
 
 {
-    "nombre" : "folder2",
+    "nombre" : "Estructuras",
     "idUsuario" : "e342a171-6557-11ee-ad06-204ef64c69c6"
 }
 
 ### Obtener folders
 GET http://localhost:3000/folders/
+
+### Eliminar un folder especifico 
+DELETE http://localhost:3000/folders/5
 
 ### Obtener todas las notas
 GET http://localhost:3000/notes/
@@ -37,8 +40,8 @@ POST http://localhost:3000/notes/
 Content-Type: application/json
 
 {
-    "temaNota":"nota1",
+    "temaNota":"Nota-estructuras",
     "fechaNota":"2021-10-10",
-    "descripcionNota":"descripcion nota",
-    "idCarpeta":1
+    "descripcionNota":"Proyecto estructuras",
+    "idCarpeta":6
 }

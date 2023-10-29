@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 import mysql, { Connection } from 'mysql2/promise'
 import { UUID, UserModel, FolderModel, NoteModel } from '../../types'
 import { RowDataPacket } from 'mysql2'
@@ -150,6 +151,21 @@ export class notesModel {
       }
     } else {
       throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async deleteFolder ({ id }: { id: number }): Promise<void> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'delete from task_glide.carpetas where task_glide.carpetas.id_carpeta= (?);'
+        await connectiondb.query(query, id)
+      } catch (e) {
+        throw new Error('Error al eliminar el usuario')
+      }
+    } else {
+      throw new Error('error al conectar con la base de datos')
     }
   }
 }

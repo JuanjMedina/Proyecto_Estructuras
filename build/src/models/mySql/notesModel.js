@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notesModel = void 0;
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 const promise_1 = __importDefault(require("mysql2/promise"));
 const DEFAULT_CONFIG = {
     host: 'localhost',
@@ -32,15 +33,6 @@ const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 class notesModel {
-    static getAllNotes() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const connectiondb = yield connect();
-            const result = yield (connectiondb === null || connectiondb === void 0 ? void 0 : connectiondb.query('select * from notas'));
-            if (result != null) {
-                return result[0];
-            }
-        });
-    }
     static createUser({ data }) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, email, telefono } = data;
@@ -94,6 +86,100 @@ class notesModel {
                 }
                 const [result] = yield connectiondb.query('select  nombre , email ,telefono from task_glide.usuarios;');
                 return result;
+            }
+            else {
+                throw new Error('error al conectar con la base de datos');
+            }
+        });
+    }
+    static getAllFolders() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connectiondb = yield connect();
+            if (connectiondb != null) {
+                try {
+                    const query = 'select * from task_glide.carpetas;';
+                    const [result] = yield connectiondb.query(query);
+                    return result;
+                }
+                catch (e) {
+                    throw new Error('Error al consultar las carpetas');
+                }
+            }
+            else {
+                throw new Error('Error al conectar con la base de datos');
+            }
+        });
+    }
+    static createFolder({ data }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { nombre } = data;
+            const connectiondb = yield connect();
+            if (connectiondb != null) {
+                try {
+                    const query = 'insert into task_glide.carpetas (nombre_carpeta) values (?) ';
+                    yield connectiondb.query(query, nombre);
+                }
+                catch (e) {
+                    throw new Error('Error al crear la carpeta');
+                }
+            }
+            else {
+                throw new Error('Error al conectar con la base de datos');
+            }
+        });
+    }
+    static createNote({ data }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { temaNota, fechaNota, descripcionNota, idCarpeta } = data;
+            const connectiondb = yield connect();
+            if (connectiondb != null) {
+                try {
+                    const query = 'insert into task_glide.notas (tema_nota,fecha_nota,descripcion_nota,id_carpeta) values (?,?,?,?);';
+                    yield connectiondb.query(query, [
+                        temaNota,
+                        fechaNota,
+                        descripcionNota,
+                        idCarpeta
+                    ]);
+                }
+                catch (e) {
+                    throw new Error('Error al crear la nota');
+                }
+            }
+            else {
+                throw new Error('Error al conectar con la base de datos');
+            }
+        });
+    }
+    static getAllNotes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connectiondb = yield connect();
+            if (connectiondb != null) {
+                try {
+                    const query = 'select * from task_glide.notas;';
+                    const [result] = yield connectiondb.query(query);
+                    return result;
+                }
+                catch (e) {
+                    throw new Error('Error al consultar las notas');
+                }
+            }
+            else {
+                throw new Error('Error al conectar con la base de datos');
+            }
+        });
+    }
+    static deleteFolder({ id }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connectiondb = yield connect();
+            if (connectiondb != null) {
+                try {
+                    const query = 'delete from task_glide.carpetas where task_glide.carpetas.id_carpeta= (?);';
+                    yield connectiondb.query(query, id);
+                }
+                catch (e) {
+                    throw new Error('Error al eliminar el usuario');
+                }
             }
             else {
                 throw new Error('error al conectar con la base de datos');

@@ -8,15 +8,15 @@ export const createUserRouter = ({
   notesModel: any
 }): Router => {
   const userController = new UserController({ notesModel })
-  const notesRouter = Router()
+  const userRouter = Router()
 
-  notesRouter.get('/', userController.getAllUser)
+  userRouter.get('/', userController.getAllUser)
 
-  notesRouter.post('/', userController.CreateUser)
+  userRouter.post('/', userController.CreateUser)
 
-  notesRouter.get('/:id')
+  userRouter.get('/:id')
 
-  notesRouter.delete('/:id', userController.deleteUser)
+  userRouter.delete('/:id', userController.deleteUser)
 
-  return notesRouter
+  return userRouter
 }
