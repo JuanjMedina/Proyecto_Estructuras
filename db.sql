@@ -22,6 +22,7 @@ CREATE TABLE task_glide.reuniones (
   CREATE TABLE task_glide.carpetas (
   id_carpeta INT NOT NULL AUTO_INCREMENT,
   nombre_carpeta VARCHAR(20) NOT NULL,
+  created timestamp default current_timestamp,
   PRIMARY KEY (id_carpeta));
   
   CREATE TABLE task_glide.notas (
@@ -52,8 +53,6 @@ CREATE TABLE task_glide.reuniones (
   id_carpeta INT NOT NULL,
   FOREIGN KEY (id_carpeta) REFERENCES task_glide.carpetas (id_carpeta),
   FOREIGN KEY (id_usuario) REFERENCES task_glide.usuarios (id_usuario));
-  
-  
   
   
   

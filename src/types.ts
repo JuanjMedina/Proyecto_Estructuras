@@ -5,6 +5,12 @@ export interface Notes {
   fecha: string
   fechaEliminacion: string | null
 }
+export interface Folder {
+  idCarpeta: number
+  nombre: string
+  fechaCreacion: Date
+}
+
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
 
 export interface NotesModel {

@@ -1,33 +1,51 @@
 export class PriorityQueue<T> {
-  private readonly elements: Array<[T, number]> = []
+  readonly items: T[] = []
 
-  enqueue (item: T, priority: number): void {
-    this.elements.push([item, priority])
-    this.elements.sort((a, b) => a[1] - b[1])
+  constructor (initialItems: T[]) {
+    this.items = initialItems
+    this.sortItems()
+  }
+
+  enqueue (item: T): void {
+    this.items.push(item)
+    this.sortItems()
   }
 
   dequeue (): T | undefined {
     if (this.isEmpty()) {
       return undefined
     }
-    if (this.isEmpty()) {
-      return undefined
-    }
-    return this.elements.shift()?.[0]
+
+    return this.items.shift()
   }
 
   peek (): T | undefined {
     if (this.isEmpty()) {
       return undefined
     }
-    return this.elements[0][0]
+
+    return this.items[0]
   }
 
   isEmpty (): boolean {
-    return this.elements.length === 0
+    return this.items.length === 0
   }
 
   size (): number {
-    return this.elements.length
+    return this.items.length
+  }
+
+  private sortItems (): void {
+    this.items.sort((a: any, b: any) => {
+      const dateA = new Date(a.created)
+      const dateB = new Date(b.created)
+      if (dateA < dateB) {
+        return 1
+      }
+      if (dateA > dateB) {
+        return -1
+      }
+      return 0
+    })
   }
 }

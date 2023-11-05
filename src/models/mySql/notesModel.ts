@@ -26,7 +26,7 @@ export class notesModel {
     data
   }: {
     data: UserModel
-  }): Promise<RowDataPacket[][]> {
+  }): Promise<RowDataPacket[]> {
     const { name, email, telefono } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -41,7 +41,7 @@ export class notesModel {
       } catch (e) {
         throw new Error('Error al crear el usuario')
       }
-      const [result] = await connectiondb.query<RowDataPacket[][]>(
+      const [result] = await connectiondb.query<RowDataPacket[]>(
         'select  nombre , email ,telefono from task_glide.usuarios;'
       )
       return result
