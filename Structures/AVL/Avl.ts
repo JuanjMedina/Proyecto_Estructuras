@@ -99,7 +99,7 @@ export class AVLTree<T> {
     } else {
       return node // Duplicate values are not allowed
     }
-    this.balance(node)
+    this.updateHeight(node)
     return this.balance(node) as TreeNode<T>
   }
 
@@ -180,17 +180,31 @@ export class AVLTree<T> {
     const temp = node
     if (temp != null) {
       console.log(temp.value)
-      this.inOrderTraversal(temp.left)
-      this.inOrderTraversal(temp.right)
+      this.preOrderTraversal(temp.left)
+      this.preOrderTraversal(temp.right)
     }
   }
 
   postOrderTraversal (node: TreeNode<T> | null): void {
     const temp = node
     if (temp != null) {
-      this.inOrderTraversal(temp.left)
-      this.inOrderTraversal(temp.right)
+      this.postOrderTraversal(temp.left)
+      this.postOrderTraversal(temp.right)
       console.log(temp.value)
     }
   }
 }
+
+const tree = new AVLTree<number>()
+tree.insert(1)
+tree.insert(2)
+tree.insert(3)
+tree.insert(4)
+tree.insert(5)
+tree.insert(6)
+tree.insert(7)
+console.log('traverse')
+tree.delete(4)
+console.log('traverse')
+tree.inOrderTraversal(tree.root)
+console.log(tree)
