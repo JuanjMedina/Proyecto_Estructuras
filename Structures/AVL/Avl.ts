@@ -145,14 +145,16 @@ export class AVLTree<T> {
     } else if (value > node.value) {
       node.right = this.deleteNode(node.right, value)
     } else {
-      // if (node.left == null || node.right == null) {
-      //   // node = node.left != null || node.right
-      //   node = node.left != null ? node.left : node.right
-      // } else {
-      //   const minValue = this.findMinValue(node.right)
-      //   node.value = minValue
-      //   node.right = this.deleteNode(node.right, minValue)
-      // }
+      if (node.left == null && node.right == null) {
+        return null
+      } else if (node.right == null) {
+        node = node.left
+      } else {
+        const minValue = this.findMinValue(node.right)
+        node.value = minValue
+        node.right = this.deleteNode(node.right, minValue)
+      }
+      return node
     }
 
     return this.balance(node)
