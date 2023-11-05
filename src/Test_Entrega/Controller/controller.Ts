@@ -202,7 +202,7 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
     const folder: Folder = {
       idCarpeta: Math.floor(Math.random() * objectData),
       nombre: 'Carpeta de prueba',
-      fechaCreacion: generateRandomDate()
+      created: generateRandomDate()
     }
     return folder
   }

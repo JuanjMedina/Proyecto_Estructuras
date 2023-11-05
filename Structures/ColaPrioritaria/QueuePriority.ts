@@ -1,4 +1,6 @@
-export class PriorityQueue<T> {
+import { Folder } from '../../src/types'
+
+export class PriorityQueue<T extends Folder> {
   readonly items: T[] = []
 
   constructor (initialItems: T[]) {
@@ -36,7 +38,7 @@ export class PriorityQueue<T> {
   }
 
   private sortItems (): void {
-    this.items.sort((a: any, b: any) => {
+    this.items.sort((a: Folder, b: Folder) => {
       const dateA = new Date(a.created)
       const dateB = new Date(b.created)
       if (dateA < dateB) {

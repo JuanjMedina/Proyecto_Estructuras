@@ -8,7 +8,7 @@ export interface Notes {
 export interface Folder {
   idCarpeta: number
   nombre: string
-  fechaCreacion: Date
+  created: Date
 }
 
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
