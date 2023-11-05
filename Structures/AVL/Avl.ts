@@ -145,14 +145,14 @@ export class AVLTree<T> {
     } else if (value > node.value) {
       node.right = this.deleteNode(node.right, value)
     } else {
-      if (node.left == null || node.right == null) {
-        // node = node.left != null || node.right
-        node = node.left != null ? node.left : node.right
-      } else {
-        const minValue = this.findMinValue(node.right)
-        node.value = minValue
-        node.right = this.deleteNode(node.right, minValue)
-      }
+      // if (node.left == null || node.right == null) {
+      //   // node = node.left != null || node.right
+      //   node = node.left != null ? node.left : node.right
+      // } else {
+      //   const minValue = this.findMinValue(node.right)
+      //   node.value = minValue
+      //   node.right = this.deleteNode(node.right, minValue)
+      // }
     }
 
     return this.balance(node)
@@ -163,5 +163,32 @@ export class AVLTree<T> {
       return node.value
     }
     return this.findMinValue(node.left)
+  }
+
+  inOrderTraversal (node: TreeNode<T> | null): void {
+    const temp = node
+    if (temp != null) {
+      this.inOrderTraversal(temp.left)
+      console.log(temp.value)
+      this.inOrderTraversal(temp.right)
+    }
+  }
+
+  preOrderTraversal (node: TreeNode<T> | null): void {
+    const temp = node
+    if (temp != null) {
+      console.log(temp.value)
+      this.inOrderTraversal(temp.left)
+      this.inOrderTraversal(temp.right)
+    }
+  }
+
+  postOrderTraversal (node: TreeNode<T> | null): void {
+    const temp = node
+    if (temp != null) {
+      this.inOrderTraversal(temp.left)
+      this.inOrderTraversal(temp.right)
+      console.log(temp.value)
+    }
   }
 }
