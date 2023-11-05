@@ -3,6 +3,7 @@ import { Queue } from '../../../Structures/cola/queue'
 import { DoubleLinkedList } from '../../../Structures/doubleLinkedList/doubleLinkedLIst'
 import { Stack } from '../../../Structures/pila/stack'
 import { Notes } from '../../types'
+import { BST } from '../../../Structures/BST/Bst'
 import { v4 as uuidv4 } from 'uuid'
 
 export const stackFunction = (_req: Request, res: Response) => {
@@ -180,4 +181,8 @@ export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   let timeTaken = Date.now() - start
   res.json({ message: 'Total time taken : ' + timeTaken + ' milliseconds' })
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
+}
+
+export const bstFunction = (_req: Request, res: Response) => {
+  
 }
