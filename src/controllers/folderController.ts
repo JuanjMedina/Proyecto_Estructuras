@@ -1,5 +1,5 @@
 import { Request, Response } from 'express-serve-static-core'
-
+import { PriorityQueue } from '../../Structures/ColaPrioritaria/QueuePriority'
 export class FolderController {
   notesModel: any
   constructor ({ notesModel }: { notesModel: any }) {
@@ -18,7 +18,9 @@ export class FolderController {
   getAllFolders = async (_req: Request, res: Response): Promise<void> => {
     try {
       const allFolder = await this.notesModel.getAllFolders()
-      res.status(200).json(allFolder)
+      const queue = new PriorityQueue(allFolder)
+      const dataFolder = queue.items
+      res.status(200).json(dataFolder)
     } catch (e) {
       res.status(400).json({ message: 'error' })
     }

@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 import { Queue } from '../../../Structures/cola/queue'
 import { DoubleLinkedList } from '../../../Structures/doubleLinkedList/doubleLinkedLIst'
 import { Stack } from '../../../Structures/pila/stack'
-import { Notes } from '../../types'
-import { BST } from '../../../Structures/BST/Bst'
+import { Folder, Notes } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
+import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority'
 
 export const stackFunction = (_req: Request, res: Response) => {
   class record {
@@ -126,7 +126,8 @@ export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   class Folder {
     DoubleLinkedList = new DoubleLinkedList<Notes>()
 
-    addLinkedList(Nota:Notes) { // Nota: Notes
+    addLinkedList(Nota: Notes) {
+      // Nota: Notes
       this.DoubleLinkedList.addEnd(Nota)
       // this.DoubleLinkedList.addEnd(number)
     }
@@ -183,6 +184,42 @@ export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
 
-export const bstFunction = (_req: Request, res: Response) => {
-  
+export const priorityQueueFunction = (_req: Request, res: Response) => {
+  function generateRandomDate() {
+    const minTimestamp = 0
+    const maxTimestamp = Date.now()
+    const randomTimestamp = Math.floor(
+      Math.random() * (maxTimestamp - minTimestamp + 1) + minTimestamp
+    )
+    const randomDate = new Date(randomTimestamp)
+    return randomDate
+  }
+
+  let start = Date.now()
+  let objectData = 100000
+
+  const createFolder = () => {
+    const folder: Folder = {
+      idCarpeta: Math.floor(Math.random() * objectData),
+      nombre: 'Carpeta de prueba',
+      created: generateRandomDate()
+    }
+    return folder
+  }
+  const ArrayObjects = []
+  for (let i = 0; i < objectData; i++) {
+    const folder = createFolder()
+    ArrayObjects.push(folder)
+  }
+  const queue = new PriorityQueue(ArrayObjects)
+  for (let i = 0; i < queue.size(); i++) {
+    queue.dequeue()
+  }
+
+  let timeTaken = Date.now() - start
+  res.json({
+    message: 'Total time taken : ' + timeTaken + ' milliseconds',
+    objets:  objectData
+  })
+  console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
