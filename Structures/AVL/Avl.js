@@ -11,8 +11,9 @@ var TreeNode = /** @class */ (function () {
     return TreeNode;
 }());
 var AVLTree = /** @class */ (function () {
-    function AVLTree() {
+    function AVLTree(comparador) {
         this.root = null;
+        this.comparador = comparador;
     }
     AVLTree.prototype.getHeight = function (node) {
         return node != null ? node.height : 0;
@@ -70,10 +71,11 @@ var AVLTree = /** @class */ (function () {
         if (node == null) {
             return new TreeNode(value);
         }
-        if (value < node.value) {
+        var comparacion = this.comparador(value, node.value);
+        if (comparacion < 0) {
             node.left = this.insertNode(node.left, value);
         }
-        else if (value > node.value) {
+        else if (comparacion > 0) {
             node.right = this.insertNode(node.right, value);
         }
         else {
@@ -89,10 +91,11 @@ var AVLTree = /** @class */ (function () {
         if (node === null) {
             return false;
         }
-        if (value === node.value) {
+        var comparacion = this.comparador(value, node.value);
+        if (comparacion === 0) {
             return true;
         }
-        else if (value < node.value) {
+        else if (comparacion < 0) {
             return this.searchNode(node.left, value);
         }
         else {
@@ -115,10 +118,11 @@ var AVLTree = /** @class */ (function () {
     AVLTree.prototype.deleteNode = function (node, value) {
         if (node == null)
             return node;
-        if (value < node.value) {
+        var comparacion = this.comparador(value, node.value);
+        if (comparacion < 0) {
             node.left = this.deleteNode(node.left, value);
         }
-        else if (value > node.value) {
+        else if (comparacion > 0) {
             node.right = this.deleteNode(node.right, value);
         }
         else {
@@ -142,6 +146,20 @@ var AVLTree = /** @class */ (function () {
             return node.value;
         }
         return this.findMinValue(node.left);
+    };
+    AVLTree.prototype.find = function (node, value) {
+        if (node == null) {
+            return null;
+        }
+        if (value === node.value) {
+            return node;
+        }
+        else if (value < node.value) {
+            return this.find(node.left, value);
+        }
+        else {
+            return this.find(node.right, value);
+        }
     };
     AVLTree.prototype.inOrderTraversal = function (node) {
         var temp = node;
@@ -170,7 +188,10 @@ var AVLTree = /** @class */ (function () {
     return AVLTree;
 }());
 exports.AVLTree = AVLTree;
-var tree = new AVLTree();
+var comparadorNulo = function (a, b) {
+    return a - b;
+};
+var tree = new AVLTree(comparadorNulo);
 tree.insert(1);
 tree.insert(2);
 tree.insert(3);
@@ -183,3 +204,5 @@ tree.delete(4);
 console.log('traverse');
 tree.inOrderTraversal(tree.root);
 console.log(tree);
+console.log(tree.find(tree.root, 2));
+console.log(tree.find(tree.root, 10));

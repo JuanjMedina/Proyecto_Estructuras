@@ -1,4 +1,4 @@
-class TreeNode<T> {
+export class TreeNode<T> {
   value: T
   left: TreeNode<T> | null
   right: TreeNode<T> | null
@@ -14,9 +14,11 @@ class TreeNode<T> {
 
 export class AVLTree<T> {
   root: TreeNode<T> | null
+  comparador: (a: T, b: T) => number
 
-  constructor () {
+  constructor (comparador: (a: T, b: T) => number) {
     this.root = null
+    this.comparador = comparador
   }
 
   private getHeight (node: TreeNode<T> | null): number {
@@ -91,10 +93,10 @@ export class AVLTree<T> {
     if (node == null) {
       return new TreeNode(value)
     }
-
-    if (value < node.value) {
+    const comparacion: number = this.comparador(value, node.value)
+    if (comparacion < 0) {
       node.left = this.insertNode(node.left, value)
-    } else if (value > node.value) {
+    } else if (comparacion > 0) {
       node.right = this.insertNode(node.right, value)
     } else {
       return node // Duplicate values are not allowed
@@ -111,10 +113,10 @@ export class AVLTree<T> {
     if (node === null) {
       return false
     }
-
-    if (value === node.value) {
+    const comparacion: number = this.comparador(value, node.value)
+    if (comparacion === 0) {
       return true
-    } else if (value < node.value) {
+    } else if (comparacion < 0) {
       return this.searchNode(node.left, value)
     } else {
       return this.searchNode(node.right, value)
@@ -139,10 +141,10 @@ export class AVLTree<T> {
 
   private deleteNode (node: TreeNode<T> | null, value: T): TreeNode<T> | null {
     if (node == null) return node
-
-    if (value < node.value) {
+    const comparacion: number = this.comparador(value, node.value)
+    if (comparacion < 0) {
       node.left = this.deleteNode(node.left, value)
-    } else if (value > node.value) {
+    } else if (comparacion > 0) {
       node.right = this.deleteNode(node.right, value)
     } else {
       if (node.left == null && node.right == null) {
@@ -165,6 +167,19 @@ export class AVLTree<T> {
       return node.value
     }
     return this.findMinValue(node.left)
+  }
+
+  find (node: TreeNode<T> | null, value: T): TreeNode<T> | null {
+    if (node == null) {
+      return null
+    }
+    if (value === node.value) {
+      return node
+    } else if (value < node.value) {
+      return this.find(node.left, value)
+    } else {
+      return this.find(node.right, value)
+    }
   }
 
   inOrderTraversal (node: TreeNode<T> | null): void {
@@ -195,7 +210,10 @@ export class AVLTree<T> {
   }
 }
 
-const tree = new AVLTree<number>()
+const comparadorNulo = (a: number, b: number): number => {
+  return a - b
+}
+const tree = new AVLTree<number>(comparadorNulo)
 tree.insert(1)
 tree.insert(2)
 tree.insert(3)
@@ -208,3 +226,5 @@ tree.delete(4)
 console.log('traverse')
 tree.inOrderTraversal(tree.root)
 console.log(tree)
+console.log(tree.find(tree.root, 2))
+console.log(tree.find(tree.root, 10))
