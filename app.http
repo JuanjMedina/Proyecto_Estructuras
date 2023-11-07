@@ -55,3 +55,6 @@ Content-Type: application/json
     "idNota":100,
     "idCarpeta":2
 }
+
+### probar conjuntos disjuntos 
+GET http://localhost:3000/test/conjuntosDisjuntos
