@@ -4,6 +4,7 @@ export interface Notes {
   descripcion: string
   fecha: string
   fechaEliminacion: string | null
+  idFolder: number | null
 }
 export interface Folder {
   idCarpeta: number
