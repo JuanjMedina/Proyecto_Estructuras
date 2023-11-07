@@ -214,8 +214,8 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
     const folder = createFolder()
     ArrayObjects.push(folder)
   }
-  const queue = new PriorityQueue(ArrayObjects)
-  for (let i = 0; i < queue.size(); i++) {
+  const queue = new PriorityQueue(ArrayObjects) // encolar en la cola prioritaria 
+  for (let i = 0; i < queue.size(); i++) { // desencolar 
     queue.dequeue()
   }
 

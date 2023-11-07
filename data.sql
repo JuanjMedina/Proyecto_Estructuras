@@ -1,3 +1,4 @@
+-- SQLBook: Code
 insert into  task_glide.usuarios  (id_usuario, nombre, email, telefono) values (UUID_TO_BIN(uuid()), 'tblewmen0', 'krooksby0@addtoany.com', '7891498');
 insert into  task_glide.usuarios  (id_usuario, nombre, email, telefono) values (UUID_TO_BIN(uuid()), 'jowain1', 'llarver1@illinois.edu', '5827236');
 insert into  task_glide.usuarios  (id_usuario, nombre, email, telefono) values (UUID_TO_BIN(uuid()), 'rroberti2', 'jchantrell2@ycombinator.com', '6796361');

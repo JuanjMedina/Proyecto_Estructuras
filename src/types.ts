@@ -14,6 +14,11 @@ export interface Folder {
 
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
 
+export interface dataNoteandFolder {
+  idNota: number
+  idCarpeta: number
+}
+
 export interface NotesModel {
   getAllNotes: () => Promise<Notes[]>
 }

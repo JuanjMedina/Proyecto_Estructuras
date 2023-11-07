@@ -1,17 +1,24 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 import mysql, { Connection } from 'mysql2/promise'
-import { UUID, UserModel, FolderModel, NoteModel } from '../../types'
+import {
+  UUID,
+  UserModel,
+  FolderModel,
+  NoteModel,
+  dataNoteandFolder
+} from '../../types'
 import { RowDataPacket } from 'mysql2'
 
 const DEFAULT_CONFIG = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: '',
+  password: 'root',
   database: 'task_glide'
 }
 
 const CONNECTION_DATA = DEFAULT_CONFIG
+
 const connect = async (): Promise<Connection | undefined> => {
   try {
     const connection = await mysql.createConnection(CONNECTION_DATA)
@@ -116,6 +123,21 @@ export class notesModel {
     }
   }
 
+  static async deleteFolder ({ id }: { id: number }): Promise<void> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'delete from task_glide.carpetas where task_glide.carpetas.id_carpeta= (?);'
+        await connectiondb.query(query, id)
+      } catch (e) {
+        throw new Error('Error al eliminar el usuario')
+      }
+    } else {
+      throw new Error('error al conectar con la base de datos')
+    }
+  }
+
   static async createNote ({ data }: { data: NoteModel }): Promise<void> {
     const { temaNota, fechaNota, descripcionNota, idCarpeta } = data
     const connectiondb = await connect()
@@ -142,8 +164,7 @@ export class notesModel {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
-        const query: string =
-          'select * from task_glide.notas;'
+        const query: string = 'select * from task_glide.notas;'
         const [result] = await connectiondb.query<RowDataPacket[][]>(query)
         return result
       } catch (e) {
@@ -154,18 +175,44 @@ export class notesModel {
     }
   }
 
-  static async deleteFolder ({ id }: { id: number }): Promise<void> {
+  static async getAllNotesandFolders (): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
         const query: string =
-          'delete from task_glide.carpetas where task_glide.carpetas.id_carpeta= (?);'
-        await connectiondb.query(query, id)
+          'select carpetas.id_carpeta, carpetas.nombre_carpeta, id_nota, tema_nota, descripcion_nota, notas.id_carpeta as notas_carpeta from task_glide.carpetas inner join task_glide.notas on task_glide.carpetas.id_carpeta = task_glide.notas.id_carpeta;'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+
+        return result
       } catch (e) {
-        throw new Error('Error al eliminar el usuario')
+        throw new Error('Error al consultar las notas y carpetas')
       }
     } else {
-      throw new Error('error al conectar con la base de datos')
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async updateNoteandFolder ({
+    dataNoteandFolder
+  }: {
+    dataNoteandFolder: dataNoteandFolder
+  }): Promise<RowDataPacket[][]> {
+    const { idNota, idCarpeta } = dataNoteandFolder
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string =
+          'update task_glide.notas set task_glide.notas.id_carpeta=(?) where task_glide.notas.id_nota=(?);'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query, [
+          idCarpeta,
+          idNota
+        ])
+        return result
+      } catch (e) {
+        throw new Error('Error al actualizar la nota')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
     }
   }
 }
