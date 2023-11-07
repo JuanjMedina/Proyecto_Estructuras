@@ -6,6 +6,7 @@ import { Folder, Notes } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
 import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority'
 import { AVLTree} from '../../../Structures/AVL/Avl'
+import { BinarySearchTree } from '../../../Structures/BST/Bst'
 
 export const stackFunction = (_req: Request, res: Response) => {
   class record {
@@ -104,7 +105,8 @@ export const queueFunction = (_req: Request, res: Response) => {
       titulo: 'Nota de prueba',
       descripcion: 'Esta es una nota de prueba',
       fecha: '2023-10-08',
-      fechaEliminacion: null // Inicialmente no está en la papelera
+      fechaEliminacion: null, // Inicialmente no está en la papelera
+      idFolder: null
     }
     return nota
   }
@@ -128,7 +130,8 @@ const crearNotas = (): Notes => {
     titulo: 'Nota de prueba',
     descripcion: 'Esta es una nota de prueba',
     fecha: '2023-10-08',
-    fechaEliminacion: null // Inicialmente no está en la papelera
+    fechaEliminacion: null, // Inicialmente no está en la papelera
+    idFolder: null
   }
   return nota
 }
@@ -189,7 +192,8 @@ export const doubleLinkedListFunction = (_req: Request, res: Response) => {
       titulo: 'Nota de prueba',
       descripcion: 'Esta es una nota de prueba',
       fecha: '2023-10-08',
-      fechaEliminacion: null // Inicialmente no está en la papelera
+      fechaEliminacion: null, // Inicialmente no está en la papelera
+      idFolder: null
     }
     return nota
   }
@@ -261,8 +265,6 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
 
-
-
 const createTestNotes = () => {
   const folderList: AvlFolder[] = []
   const carpetas: number = 100
@@ -313,4 +315,76 @@ export const findNotesFunction = (_req: Request, res: Response) => {
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
 
+export const bstFunction = (_req: Request, res: Response) => {
+  function generateRandomDate() {
+    const minTimestamp = 0
+    const maxTimestamp = Date.now()
+    const randomTimestamp = Math.floor(
+      Math.random() * (maxTimestamp - minTimestamp + 1) + minTimestamp
+    )
+    const randomDate = new Date(randomTimestamp)
+    return randomDate
+  }
 
+  const start = Date.now()
+  const objectData1 = 100
+  const objectData2 = 1000
+  const carpetas: Folder[] = []
+  const notas: Notes[] = []
+
+  const createFolder = () : Folder => {
+    const folder: Folder = {
+      idCarpeta: 0,
+      nombre: '',
+      created: generateRandomDate()
+    }
+    return folder
+  }
+
+  const createNotas = (): Notes => {
+    const nota: Notes = {
+      idNota: uuidv4(),
+      titulo: '',
+      descripcion: 'Esta es una nota de prueba',
+      fecha: '2023-10-08',
+      fechaEliminacion: null, // Inicialmente no está en la papelera
+      idFolder: null
+    }
+    return nota
+  }
+  
+  for (let index = 0; index < objectData1; index++) {   
+    const folder = createFolder();
+    folder.idCarpeta = index
+    folder.nombre = `Carpeta de prueba ${index}`
+    carpetas.push(folder)
+  }
+
+  for (let index = 0; index < objectData2; index++) {   
+    const nota = createNotas();
+    nota.idFolder = Math.floor(Math.random() * objectData1)
+    nota.titulo = `Nota de prueba ${index}`
+    notas.push(nota)
+  }
+
+  const resultados = []
+
+  for (let index = 0; index < carpetas.length; index++) {
+    const arbolNotas: BinarySearchTree = new BinarySearchTree()
+    notas.forEach(nota => {
+      if (nota.idFolder === index) {
+        arbolNotas.insert(nota)
+      }
+    })
+    if (arbolNotas.search(notas[1])) {
+      resultados.push(carpetas[index].nombre)
+    }
+  }
+
+  const timeTaken = Date.now() - start
+
+  res.json({message: `Total time taken, ${timeTaken}`,
+            Notes: notas[1],
+            results: resultados,    
+            objets:  objectData2})
+}

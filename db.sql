@@ -11,7 +11,7 @@ CREATE TABLE task_glide.usuarios (
 
 CREATE TABLE task_glide.reuniones (
   id_reunion INT NOT NULL AUTO_INCREMENT,
-  link_reunion VARCHAR(45) NOT NULL,
+  link_reunion VARCHAR(100) NOT NULL,
   fecha_reunion DATE NOT NULL,
   hora_reunion TIME NULL,
   tema_reunion VARCHAR(45) NOT NULL,
@@ -53,8 +53,6 @@ CREATE TABLE task_glide.reuniones (
   id_carpeta INT NOT NULL,
   FOREIGN KEY (id_carpeta) REFERENCES task_glide.carpetas (id_carpeta),
   FOREIGN KEY (id_usuario) REFERENCES task_glide.usuarios (id_usuario));
-  
-  
   
   
 -- insert into task_glide.usuarios values (UUID_TO_BIN(uuid()),'emiliano', 'emiliano@unal.edu.co',323233);

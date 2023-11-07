@@ -1,5 +1,4 @@
 
-
 ### obtener usuarios
 GET http://localhost:3000/user/
 

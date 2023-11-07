@@ -1,34 +1,35 @@
-class TreeNode<T> {
-  value: T
-  left: TreeNode<T> | null
-  right: TreeNode<T> | null
+import { Notes } from '../../src/types'
+class TreeNode {
+  value: Notes
+  left: TreeNode | null
+  right: TreeNode | null
 
-  constructor (value: T) {
+  constructor (value: Notes) {
     this.value = value
     this.left = null
     this.right = null
   }
 }
 
-export class BinarySearchTree<T> {
-  root: TreeNode<T> | null
+export class BinarySearchTree {
+  root: TreeNode | null
 
   constructor () {
     this.root = null
   }
 
-  insert (value: T): void {
+  insert (value: Notes): void {
     const newNode = new TreeNode(value)
 
-    if (this.root == null) {
+    if (this.root === null) {
       this.root = newNode
     } else {
       this.insertNode(this.root, newNode)
     }
   }
 
-  private insertNode (node: TreeNode<T>, newNode: TreeNode<T>): void {
-    if (newNode.value < node.value) {
+  private insertNode (node: TreeNode, newNode: TreeNode): void {
+    if (this.convertStringtoASCII(newNode.value.titulo) < this.convertStringtoASCII(node.value.titulo)) {
       if (node.left === null) {
         node.left = newNode
       } else {
@@ -43,25 +44,25 @@ export class BinarySearchTree<T> {
     }
   }
 
-  search (value: T): boolean {
-    return this.searchNode(this.root, value)
+  search (value: Notes): boolean {
+    return this.searchNodebyTitle(this.root, value)
   }
 
-  private searchNode (node: TreeNode<T> | null, value: T): boolean {
+  private searchNodebyTitle (node: TreeNode | null, value: Notes): boolean {
     if (node === null) {
       return false
     }
 
-    if (value === node.value) {
+    if (value.titulo === node.value.titulo) {
       return true
-    } else if (value < node.value) {
-      return this.searchNode(node.left, value)
+    } else if (this.convertStringtoASCII(value.titulo) < this.convertStringtoASCII(node.value.titulo)) {
+      return this.searchNodebyTitle(node.left, value)
     } else {
-      return this.searchNode(node.right, value)
+      return this.searchNodebyTitle(node.right, value)
     }
   }
 
-  minValue (): T | null {
+  /* minValue (): TreeNode | null {
     if (this.root == null) {
       return null
     }
@@ -71,13 +72,13 @@ export class BinarySearchTree<T> {
       current = current.left
     }
     return current.value
-  }
+  } */
 
-  delete (value: T): void {
+  delete (value: Notes): void {
     this.root = this.deleteNode(this.root, value)
   }
 
-  private deleteNode (node: TreeNode<T> | null, value: T): TreeNode<T> | null {
+  private deleteNode (node: TreeNode | null, value: Notes): TreeNode | null {
     if (node === null) {
       return null
     }
@@ -103,10 +104,19 @@ export class BinarySearchTree<T> {
     return node
   }
 
-  private findMinValue (node: TreeNode<T>): T {
+  private findMinValue (node: TreeNode): Notes {
     if (node.left === null) {
       return node.value
     }
     return this.findMinValue(node.left)
+  }
+
+  private convertStringtoASCII (string: String): number {
+    const array = new Array(string.length)
+    for (let index = 0; index < string.length; index++) {
+      array[index] = string.charCodeAt(index)
+    }
+    const result = parseInt(array.join(''))
+    return result
   }
 }
