@@ -261,6 +261,8 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
 
+
+
 const createTestNotes = () => {
   const folderList: AvlFolder[] = []
   const carpetas: number = 100
@@ -270,8 +272,8 @@ const createTestNotes = () => {
     folderList.push(folder)
   }
   for(let i = 0; i < tasks; i++){
-    const nota = crearNotas()
-    const randomFolder = Math.floor(Math.random() * carpetas ) + 1
+    const nota: Notes = crearNotas() as Notes
+    const randomFolder = Math.floor(Math.random() * carpetas )
     const folder = folderList[randomFolder]
     folder.insertNote(nota)
   }
@@ -294,6 +296,7 @@ const testIds = createTestIds()
 
 export const findNotesFunction = (_req: Request, res: Response) => {
   const resultados: DoubleLinkedList<Notes | null> = new DoubleLinkedList<Notes>
+  let start = Date.now()
   for (let i = 0; i < 1000; i++) {
     const testFind = testIds[i]
     for (let j = 0; j < 100; i++) {
@@ -302,7 +305,6 @@ export const findNotesFunction = (_req: Request, res: Response) => {
       resultados.addEnd(res)
     }
   }
-  let start = Date.now()
   let timeTaken = Date.now() - start
   res.json({
     message: 'Total time taken : ' + timeTaken + ' milliseconds',

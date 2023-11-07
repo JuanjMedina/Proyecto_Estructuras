@@ -209,22 +209,3 @@ export class AVLTree<T> {
     }
   }
 }
-
-const comparadorNulo = (a: number, b: number): number => {
-  return a - b
-}
-const tree = new AVLTree<number>(comparadorNulo)
-tree.insert(1)
-tree.insert(2)
-tree.insert(3)
-tree.insert(4)
-tree.insert(5)
-tree.insert(6)
-tree.insert(7)
-console.log('traverse')
-tree.delete(4)
-console.log('traverse')
-tree.inOrderTraversal(tree.root)
-console.log(tree)
-console.log(tree.find(tree.root, 2))
-console.log(tree.find(tree.root, 10))
