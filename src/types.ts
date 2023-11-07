@@ -1,5 +1,5 @@
 export interface Notes {
-  idNota: string
+  idNota: string | number
   titulo: string
   descripcion: string
   fecha: string
@@ -12,7 +12,19 @@ export interface Folder {
   created: Date
 }
 
+export interface NotesandFolder
+  extends Pick<Notes, 'idNota' | 'titulo' | 'descripcion' | 'idFolder'>,
+  Pick<Folder, 'idCarpeta' | 'nombre'> {
+  idNota: number
+  // Puedes agregar propiedades adicionales si es necesario.
+}
+
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
+
+export interface dataNoteandFolder {
+  idNota: number
+  idCarpeta: number
+}
 
 export interface NotesModel {
   getAllNotes: () => Promise<Notes[]>

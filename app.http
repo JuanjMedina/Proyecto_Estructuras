@@ -46,3 +46,15 @@ Content-Type: application/json
 }
 ### Prueba 
 GET http://localhost:3000/test/priorityQueue
+
+### Obtener todas las notas de una carpeta
+PATCH  http://localhost:3000/notes/NotesandFolders
+Content-Type: application/json
+
+{
+    "idNota":100,
+    "idCarpeta":2
+}
+
+### probar conjuntos disjuntos 
+GET http://localhost:3000/test/conjuntosDisjuntos

@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.doubleLinkedListFunction = exports.queueFunction = exports.stackFunction = void 0;
+exports.bstFunction = exports.priorityQueueFunction = exports.doubleLinkedListFunction = exports.queueFunction = exports.stackFunction = void 0;
 const queue_1 = require("../../../Structures/cola/queue");
 const doubleLinkedLIst_1 = require("../../../Structures/doubleLinkedList/doubleLinkedLIst");
 const stack_1 = require("../../../Structures/pila/stack");
 const uuid_1 = require("uuid");
+const QueuePriority_1 = require("../../../Structures/ColaPrioritaria/QueuePriority");
+const Bst_1 = require("../../../Structures/BST/Bst");
 const stackFunction = (_req, res) => {
     class record {
         constructor() {
@@ -85,7 +87,8 @@ const queueFunction = (_req, res) => {
             titulo: 'Nota de prueba',
             descripcion: 'Esta es una nota de prueba',
             fecha: '2023-10-08',
-            fechaEliminacion: null // Inicialmente no está en la papelera
+            fechaEliminacion: null,
+            idFolder: null
         };
         return nota;
     };
@@ -107,6 +110,7 @@ const doubleLinkedListFunction = (_req, res) => {
             this.DoubleLinkedList = new doubleLinkedLIst_1.DoubleLinkedList();
         }
         addLinkedList(Nota) {
+            // Nota: Notes
             this.DoubleLinkedList.addEnd(Nota);
             // this.DoubleLinkedList.addEnd(number)
         }
@@ -127,7 +131,8 @@ const doubleLinkedListFunction = (_req, res) => {
             titulo: 'Nota de prueba',
             descripcion: 'Esta es una nota de prueba',
             fecha: '2023-10-08',
-            fechaEliminacion: null // Inicialmente no está en la papelera
+            fechaEliminacion: null,
+            idFolder: null
         };
         return nota;
     };
@@ -153,3 +158,101 @@ const doubleLinkedListFunction = (_req, res) => {
     console.log('Total time taken : ' + timeTaken + ' milliseconds');
 };
 exports.doubleLinkedListFunction = doubleLinkedListFunction;
+const priorityQueueFunction = (_req, res) => {
+    function generateRandomDate() {
+        const minTimestamp = 0;
+        const maxTimestamp = Date.now();
+        const randomTimestamp = Math.floor(Math.random() * (maxTimestamp - minTimestamp + 1) + minTimestamp);
+        const randomDate = new Date(randomTimestamp);
+        return randomDate;
+    }
+    let start = Date.now();
+    let objectData = 100000;
+    const createFolder = () => {
+        const folder = {
+            idCarpeta: Math.floor(Math.random() * objectData),
+            nombre: 'Carpeta de prueba',
+            created: generateRandomDate()
+        };
+        return folder;
+    };
+    const ArrayObjects = [];
+    for (let i = 0; i < objectData; i++) {
+        const folder = createFolder();
+        ArrayObjects.push(folder);
+    }
+    const queue = new QueuePriority_1.PriorityQueue(ArrayObjects); // encolar en la cola prioritaria 
+    for (let i = 0; i < queue.size(); i++) { // desencolar 
+        queue.dequeue();
+    }
+    let timeTaken = Date.now() - start;
+    res.json({
+        message: 'Total time taken : ' + timeTaken + ' milliseconds',
+        objets: objectData
+    });
+    console.log('Total time taken : ' + timeTaken + ' milliseconds');
+};
+exports.priorityQueueFunction = priorityQueueFunction;
+const bstFunction = (_req, res) => {
+    function generateRandomDate() {
+        const minTimestamp = 0;
+        const maxTimestamp = Date.now();
+        const randomTimestamp = Math.floor(Math.random() * (maxTimestamp - minTimestamp + 1) + minTimestamp);
+        const randomDate = new Date(randomTimestamp);
+        return randomDate;
+    }
+    const start = Date.now();
+    const objectData1 = 100;
+    const objectData2 = 1000;
+    const carpetas = [];
+    const notas = [];
+    const createFolder = () => {
+        const folder = {
+            idCarpeta: 0,
+            nombre: '',
+            created: generateRandomDate()
+        };
+        return folder;
+    };
+    const createNotas = () => {
+        const nota = {
+            idNota: (0, uuid_1.v4)(),
+            titulo: '',
+            descripcion: 'Esta es una nota de prueba',
+            fecha: '2023-10-08',
+            fechaEliminacion: null,
+            idFolder: null
+        };
+        return nota;
+    };
+    for (let index = 0; index < objectData1; index++) {
+        const folder = createFolder();
+        folder.idCarpeta = index;
+        folder.nombre = `Carpeta de prueba ${index}`;
+        carpetas.push(folder);
+    }
+    for (let index = 0; index < objectData2; index++) {
+        const nota = createNotas();
+        nota.idFolder = Math.floor(Math.random() * objectData1);
+        nota.titulo = `Nota de prueba ${index}`;
+        notas.push(nota);
+    }
+    const resultados = [];
+    for (let index = 0; index < carpetas.length; index++) {
+        const arbolNotas = new Bst_1.BinarySearchTree();
+        notas.forEach(nota => {
+            if (nota.idFolder === index) {
+                arbolNotas.insert(nota);
+            }
+        });
+        if (arbolNotas.search(notas[1])) {
+            resultados.push(carpetas[index].nombre);
+        }
+    }
+    const timeTaken = Date.now() - start;
+    res.json({ message: `Total time taken, ${timeTaken}`,
+        Notes: notas[1],
+        results: resultados,
+        objets: objectData2 });
+};
+exports.bstFunction = bstFunction;

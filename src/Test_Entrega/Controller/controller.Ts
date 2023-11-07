@@ -2,11 +2,12 @@ import { Request, Response } from 'express'
 import { Queue } from '../../../Structures/cola/queue'
 import { DoubleLinkedList } from '../../../Structures/doubleLinkedList/doubleLinkedLIst'
 import { Stack } from '../../../Structures/pila/stack'
-import { Folder, Notes } from '../../types'
+import { Folder, Notes, NotesandFolder } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
 import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority'
 import { AVLTree} from '../../../Structures/AVL/Avl'
 import { BinarySearchTree } from '../../../Structures/BST/Bst'
+import { ConjuntoDisjunto } from '../../../Structures/ConjuntosDisjuntos/Disjoinset'
 
 export const stackFunction = (_req: Request, res: Response) => {
   class record {
@@ -252,15 +253,16 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
     const folder = createFolder()
     ArrayObjects.push(folder)
   }
-  const queue = new PriorityQueue(ArrayObjects)
+  const queue = new PriorityQueue(ArrayObjects) // encolar en la cola prioritaria
   for (let i = 0; i < queue.size(); i++) {
+    // desencolar
     queue.dequeue()
   }
 
   let timeTaken = Date.now() - start
   res.json({
     message: 'Total time taken : ' + timeTaken + ' milliseconds',
-    objets:  objectData
+    objets: objectData
   })
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
@@ -332,7 +334,7 @@ export const bstFunction = (_req: Request, res: Response) => {
   const carpetas: Folder[] = []
   const notas: Notes[] = []
 
-  const createFolder = () : Folder => {
+  const createFolder = (): Folder => {
     const folder: Folder = {
       idCarpeta: 0,
       nombre: '',
@@ -352,16 +354,16 @@ export const bstFunction = (_req: Request, res: Response) => {
     }
     return nota
   }
-  
-  for (let index = 0; index < objectData1; index++) {   
-    const folder = createFolder();
+
+  for (let index = 0; index < objectData1; index++) {
+    const folder = createFolder()
     folder.idCarpeta = index
     folder.nombre = `Carpeta de prueba ${index}`
     carpetas.push(folder)
   }
 
-  for (let index = 0; index < objectData2; index++) {   
-    const nota = createNotas();
+  for (let index = 0; index < objectData2; index++) {
+    const nota = createNotas()
     nota.idFolder = Math.floor(Math.random() * objectData1)
     nota.titulo = `Nota de prueba ${index}`
     notas.push(nota)
@@ -371,7 +373,7 @@ export const bstFunction = (_req: Request, res: Response) => {
 
   for (let index = 0; index < carpetas.length; index++) {
     const arbolNotas: BinarySearchTree = new BinarySearchTree()
-    notas.forEach(nota => {
+    notas.forEach((nota) => {
       if (nota.idFolder === index) {
         arbolNotas.insert(nota)
       }
@@ -383,8 +385,49 @@ export const bstFunction = (_req: Request, res: Response) => {
 
   const timeTaken = Date.now() - start
 
-  res.json({message: `Total time taken, ${timeTaken}`,
-            Notes: notas[1],
-            results: resultados,    
-            objets:  objectData2})
+  res.json({
+    message: `Total time taken, ${timeTaken}`,
+    Notes: notas[1],
+    results: resultados,
+    objets: objectData2
+  })
+}
+
+export const ConjuntoDisjuntoFunction = (_req: Request, res: Response) => {
+  let start = Date.now()
+  let objectData = 10000
+  const conjuntosDisjuntos = new ConjuntoDisjunto()  
+
+  // Insertar a la estructura
+  for(let i = 0; i < objectData; i++){
+    const folder: NotesandFolder = {
+      idNota: i,
+      titulo: 'Nota de prueba',
+      descripcion: 'Esta es una nota de prueba',
+      idFolder:i,
+      idCarpeta:i,
+      nombre: 'Carpeta de prueba',
+    }
+    conjuntosDisjuntos.agregarNotaACarpeta(folder.idNota, folder.idCarpeta)
+  }
+
+
+  // Cambiar nota de carpeta
+  for(let i = 0; i < objectData; i++){
+    conjuntosDisjuntos.cambiarCarpetaDeNota(i,Math.floor(Math.random() * 101 ))
+  }
+
+  // // Obtener carpeta de nota
+  // for(let i = 0; i < objectData; i++){
+  // conjuntosDisjuntos.obtenerCarpetaDeNota(i)
+  // }
+
+
+
+  let timeTaken = Date.now() - start
+  res.json({
+    message: 'Total time taken : ' + timeTaken + ' milliseconds',
+    objets: objectData
+  })
+  console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }

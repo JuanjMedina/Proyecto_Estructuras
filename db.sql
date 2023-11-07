@@ -1,3 +1,4 @@
+-- SQLBook: Code
 DROP DATABASE IF EXISTS task_glide;
 Create database task_glide;
 USE task_glide;

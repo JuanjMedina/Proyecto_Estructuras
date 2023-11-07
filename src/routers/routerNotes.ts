@@ -18,5 +18,7 @@ export const createNotesRouter = ({
 
   notesRouter.delete('/:id')
 
+  notesRouter.patch('/NotesandFolders', notesController.updateNote)
+
   return notesRouter
 }

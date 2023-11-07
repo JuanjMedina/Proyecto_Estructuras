@@ -7,3 +7,5 @@ exports.createTestRouter = (0, express_1.Router)();
 exports.createTestRouter.get('/stack', controller_1.stackFunction);
 exports.createTestRouter.get('/queue', controller_1.queueFunction);
 exports.createTestRouter.get('/doubleLinkedList', controller_1.doubleLinkedListFunction);
+exports.createTestRouter.get('/priorityQueue', controller_1.priorityQueueFunction);
+exports.createTestRouter.get('/bst', controller_1.bstFunction);
