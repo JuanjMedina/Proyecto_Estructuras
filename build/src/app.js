@@ -33,15 +33,19 @@ const routerTest_1 = require("./Test_Entrega/routerTest");
 const routesUser_1 = require("./routers/routesUser");
 const routerFolder_1 = require("./routers/routerFolder");
 const routerNotes_1 = require("./routers/routerNotes");
+const routerLogin_1 = require("./routers/routerLogin");
+const firebase_confi_1 = require("./config/firebase-confi");
 const createApp = ({ notesModel }) => {
     var _a;
     const app = (0, express_1.default)();
+    (0, firebase_confi_1.fireBaseConfig)();
     app.use((0, cors_1.default)());
     app.use((0, express_1.json)());
     const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
     app.use('/user', (0, routesUser_1.createUserRouter)({ notesModel }));
     app.use('/folders', (0, routerFolder_1.createFolderRouter)({ notesModel }));
     app.use('/notes', (0, routerNotes_1.createNotesRouter)({ notesModel }));
+    app.use('/login', (0, routerLogin_1.createLoginRouter)({ notesModel }));
     app.use('/test', routerTest_1.createTestRouter);
     app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AVLTree = void 0;
+exports.AVLTree = exports.TreeNode = void 0;
 class TreeNode {
     constructor(value) {
         this.value = value;
@@ -9,9 +9,11 @@ class TreeNode {
         this.height = 1;
     }
 }
+exports.TreeNode = TreeNode;
 class AVLTree {
-    constructor() {
+    constructor(comparador) {
         this.root = null;
+        this.comparador = comparador;
     }
     getHeight(node) {
         return node != null ? node.height : 0;
@@ -69,16 +71,17 @@ class AVLTree {
         if (node == null) {
             return new TreeNode(value);
         }
-        if (value < node.value) {
+        const comparacion = this.comparador(value, node.value);
+        if (comparacion < 0) {
             node.left = this.insertNode(node.left, value);
         }
-        else if (value > node.value) {
+        else if (comparacion > 0) {
             node.right = this.insertNode(node.right, value);
         }
         else {
             return node; // Duplicate values are not allowed
         }
-        this.balance(node);
+        this.updateHeight(node);
         return this.balance(node);
     }
     search(value) {
@@ -88,10 +91,11 @@ class AVLTree {
         if (node === null) {
             return false;
         }
-        if (value === node.value) {
+        const comparacion = this.comparador(value, node.value);
+        if (comparacion === 0) {
             return true;
         }
-        else if (value < node.value) {
+        else if (comparacion < 0) {
             return this.searchNode(node.left, value);
         }
         else {
@@ -114,22 +118,26 @@ class AVLTree {
     deleteNode(node, value) {
         if (node == null)
             return node;
-        if (value < node.value) {
+        const comparacion = this.comparador(value, node.value);
+        if (comparacion < 0) {
             node.left = this.deleteNode(node.left, value);
         }
-        else if (value > node.value) {
+        else if (comparacion > 0) {
             node.right = this.deleteNode(node.right, value);
         }
         else {
-            if (node.left == null || node.right == null) {
-                // node = node.left != null || node.right
-                node = node.left != null ? node.left : node.right;
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            else if (node.right == null) {
+                node = node.left;
             }
             else {
                 const minValue = this.findMinValue(node.right);
                 node.value = minValue;
                 node.right = this.deleteNode(node.right, minValue);
             }
+            return node;
         }
         return this.balance(node);
     }
@@ -138,6 +146,44 @@ class AVLTree {
             return node.value;
         }
         return this.findMinValue(node.left);
+    }
+    find(node, value) {
+        if (node == null) {
+            return null;
+        }
+        if (value === node.value) {
+            return node;
+        }
+        else if (value < node.value) {
+            return this.find(node.left, value);
+        }
+        else {
+            return this.find(node.right, value);
+        }
+    }
+    inOrderTraversal(node) {
+        const temp = node;
+        if (temp != null) {
+            this.inOrderTraversal(temp.left);
+            console.log(temp.value);
+            this.inOrderTraversal(temp.right);
+        }
+    }
+    preOrderTraversal(node) {
+        const temp = node;
+        if (temp != null) {
+            console.log(temp.value);
+            this.preOrderTraversal(temp.left);
+            this.preOrderTraversal(temp.right);
+        }
+    }
+    postOrderTraversal(node) {
+        const temp = node;
+        if (temp != null) {
+            this.postOrderTraversal(temp.left);
+            this.postOrderTraversal(temp.right);
+            console.log(temp.value);
+        }
     }
 }
 exports.AVLTree = AVLTree;

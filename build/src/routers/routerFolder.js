@@ -9,7 +9,6 @@ const createFolderRouter = ({ notesModel }) => {
     const notesRouter = (0, express_1.Router)();
     notesRouter.get('/', folderController.getAllFolders);
     notesRouter.post('/', folderController.createFolder);
-    notesRouter.get('/:id');
     notesRouter.delete('/:id', folderController.deleteFolder);
     return notesRouter;
 };
