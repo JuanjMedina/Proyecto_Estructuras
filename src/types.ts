@@ -31,9 +31,9 @@ export interface NotesModel {
 }
 
 export interface UserModel {
+  uid: string
   name: string
   email: string
-  telefono: number
 }
 
 export interface UserInterface {

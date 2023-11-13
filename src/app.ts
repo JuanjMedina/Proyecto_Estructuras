@@ -4,9 +4,12 @@ import { createTestRouter } from './Test_Entrega/routerTest'
 import { createUserRouter } from './routers/routesUser'
 import { createFolderRouter } from './routers/routerFolder'
 import { createNotesRouter } from './routers/routerNotes'
+import { createLoginRouter } from './routers/routerLogin'
+import { fireBaseConfig } from './config/firebase-confi'
 
 export const createApp = ({ notesModel }: { notesModel: any }): void => {
   const app = express()
+  fireBaseConfig()
 
   app.use(cors())
 
@@ -19,6 +22,8 @@ export const createApp = ({ notesModel }: { notesModel: any }): void => {
   app.use('/folders', createFolderRouter({ notesModel }))
 
   app.use('/notes', createNotesRouter({ notesModel }))
+
+  app.use('/login', createLoginRouter({ notesModel }))
 
   app.use('/test', createTestRouter)
 

@@ -20,6 +20,7 @@ createTestRouter.get('/doubleLinkedList', doubleLinkedListFunction)
 createTestRouter.get('/priorityQueue', priorityQueueFunction)
 
 createTestRouter.get('/AVL', findNotesFunction)
+
 createTestRouter.get('/conjuntosDisjuntos', ConjuntoDisjuntoFunction)
 
 createTestRouter.get('/bst', bstFunction)

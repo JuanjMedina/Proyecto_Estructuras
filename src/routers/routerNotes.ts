@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+
 import { Router } from 'express'
 import { NotesController } from '../controllers/notesController'
+import { middlewareUser } from '../middellwares'
 
 export const createNotesRouter = ({
   notesModel
@@ -10,7 +12,7 @@ export const createNotesRouter = ({
   const notesController = new NotesController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.get('/', notesController.getAllNotes)
+  notesRouter.get('/', middlewareUser.decodeToken, notesController.getAllNotes)
 
   notesRouter.post('/', notesController.createNote)
 
