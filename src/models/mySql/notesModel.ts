@@ -29,29 +29,24 @@ const connect = async (): Promise<Connection | undefined> => {
 }
 
 export class notesModel {
-  static async createUser ({
-    data
-  }: {
-    data: UserModel
-  }): Promise<RowDataPacket[]> {
-    const { name, email, telefono } = data
+  static async createUser ({ data }: { data: UserModel }): Promise<void> {
+    const { uid, name, email } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
-      const [uuidResult] = await connectiondb.query<RowDataPacket[]>(
-        'select uuid() uuid'
-      )
-      const [{ uuid }] = uuidResult
       try {
-        const query: string =
-          'insert into task_glide.usuarios values (UUID_TO_BIN(?),?,?,?)'
-        await connectiondb?.query(query, [uuid, name, email, telefono])
+        const queryUser: string =
+          ' select * from task_glide.usuarios where  usuarios.id_usuario= (?) ;'
+        const [result] = await connectiondb.query<RowDataPacket[]>(queryUser, [
+          uid
+        ])
+        if (result.length === 0) {
+          const query: string =
+            'insert into task_glide.usuarios(id_usuario,nombre,email) values (?,?,?)'
+          await connectiondb?.query(query, [uid, name, email])
+        }
       } catch (e) {
         throw new Error('Error al crear el usuario')
       }
-      const [result] = await connectiondb.query<RowDataPacket[]>(
-        'select  nombre , email ,telefono from task_glide.usuarios;'
-      )
-      return result
     } else {
       throw new Error('Error al conectar con la base de datos')
     }
@@ -160,12 +155,20 @@ export class notesModel {
     }
   }
 
-  static async getAllNotes (): Promise<RowDataPacket[][]> {
+  static async getAllNotes ({
+    data
+  }: {
+    data: UserModel
+  }): Promise<RowDataPacket[][]> {
+    const { uid } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
-        const query: string = 'select * from task_glide.notas;'
-        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        const query: string =
+          'select * from task_glide.getallnotes where getallnotes.id_usuario = (?)'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query, [
+          uid
+        ])
         return result
       } catch (e) {
         throw new Error('Error al consultar las notas')

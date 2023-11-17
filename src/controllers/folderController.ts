@@ -1,5 +1,5 @@
-import { Request, Response } from 'express-serve-static-core'
 import { PriorityQueue } from '../../Structures/ColaPrioritaria/QueuePriority'
+import { Request, Response } from 'express'
 export class FolderController {
   notesModel: any
   constructor ({ notesModel }: { notesModel: any }) {

@@ -1,5 +1,8 @@
-import { Request, Response } from 'express-serve-static-core'
+import { NextFunction, Request as ExpressRequest, Response } from 'express'
 import { ConjuntoDisjunto } from '../../Structures/ConjuntosDisjuntos/Disjoinset'
+interface Request extends ExpressRequest {
+  user?: any
+}
 
 export class NotesController {
   notesModel: any
@@ -7,21 +10,29 @@ export class NotesController {
     this.notesModel = notesModel
   }
 
-  getAllNotes = async (_req: Request, res: Response): Promise<void> => {
+  getAllNotes = async (req: Request, res: Response): Promise<void> => {
     try {
-      const allNotes = await this.notesModel.getAllNotes()
+      const data = req.user
+      const { name, uid, email } = data
+      console.log(name, uid, email)
+      await this.notesModel.createUser({ data: req.user })
+      const allNotes = await this.notesModel.getAllNotes({ data: req.user })
       res.status(200).json(allNotes)
     } catch (e) {
       res.status(400).json({ message: 'error' })
     }
   }
 
-  createNote = async (req: Request, res: Response): Promise<void> => {
+  createNote = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const newNote = await this.notesModel.createNote({ data: req.body })
       res.status(201).json(newNote)
-    } catch {
-      res.status(400).json({ message: 'error' })
+    } catch (error) {
+      next(error)
     }
   }
 
@@ -37,7 +48,8 @@ export class NotesController {
         )
       }
       console.log(conjuntoDisjunto)
-      const result = await this.notesModel.updateNoteandFolder({ //! falta logica
+      const result = await this.notesModel.updateNoteandFolder({
+        //! falta logica
         dataNoteandFolder: req.body
       })
       conjuntoDisjunto.cambiarCarpetaDeNota(idNota, idCarpeta)

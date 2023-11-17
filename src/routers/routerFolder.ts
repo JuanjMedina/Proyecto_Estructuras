@@ -14,8 +14,6 @@ export const createFolderRouter = ({
 
   notesRouter.post('/', folderController.createFolder)
 
-  notesRouter.get('/:id')
-
   notesRouter.delete('/:id', folderController.deleteFolder)
 
   return notesRouter

@@ -58,3 +58,12 @@ Content-Type: application/json
 
 ### probar conjuntos disjuntos 
 GET http://localhost:3000/test/conjuntosDisjuntos
+
+### Login JSWT
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "",
+    "JSWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
