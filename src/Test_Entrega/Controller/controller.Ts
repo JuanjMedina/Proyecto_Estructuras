@@ -5,7 +5,7 @@ import { Stack } from '../../../Structures/pila/stack'
 import { Folder, Notes, NotesandFolder } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
 import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority'
-import { AVLTree } from '../../../Structures/AVL/Avl'
+import { AVLTree} from '../../../Structures/AVL/Avl'
 import { BinarySearchTree } from '../../../Structures/BST/Bst'
 import { ConjuntoDisjunto } from '../../../Structures/ConjuntosDisjuntos/Disjoinset'
 export const stackFunction = (_req: Request, res: Response) => {
@@ -136,31 +136,31 @@ const crearNotas = (): Notes => {
   return nota
 }
 class AvlFolder {
-  notaPrueba: Notes = crearNotas()
-  comparadorNotas = (a: Notes, b: Notes): number => {
-    if (a.idNota < b.idNota) return -1
-    else if (a.idNota > b.idNota) return 1
-    return 0
-  }
-  AVLTree = new AVLTree<Notes>(this.comparadorNotas)
-  value: number = 0
-  constructor(value: number) {
-    this.value = value
-  }
-
-  insertNote(nota: Notes) {
-    this.AVLTree.insert(nota)
-  }
-  findNote(idNota: string): Notes | null {
-    this.notaPrueba.idNota = idNota
-    const notaRespuesta = this.AVLTree.find(this.AVLTree.root, this.notaPrueba)
-    if (notaRespuesta) {
-      return notaRespuesta.value
-    } else {
-      return null
+    notaPrueba: Notes = crearNotas()
+    comparadorNotas = (a: Notes, b: Notes): number => {
+      if (a.idNota < b.idNota) return -1
+      else if (a.idNota > b.idNota) return 1
+      return 0
+    }
+    AVLTree = new AVLTree<Notes>(this.comparadorNotas);
+    value: number = 0
+    constructor(value: number) {
+      this.value = value
+    }
+  
+    insertNote(nota: Notes) {
+      this.AVLTree.insert(nota)
+    }
+    findNote(idNota: string): Notes | null {
+      this.notaPrueba.idNota = idNota
+      const notaRespuesta = this.AVLTree.find(this.AVLTree.root, this.notaPrueba)
+      if (notaRespuesta) {
+        return notaRespuesta.value;
+      } else {
+        return null;
+      }
     }
   }
-}
 
 export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   class Folder {
@@ -274,9 +274,9 @@ const createTestNotes = () => {
     const folder = new AvlFolder(i)
     folderList.push(folder)
   }
-  for (let i = 0; i < tasks; i++) {
+  for(let i = 0; i < tasks; i++){
     const nota: Notes = crearNotas() as Notes
-    const randomFolder = Math.floor(Math.random() * carpetas)
+    const randomFolder = Math.floor(Math.random() * carpetas )
     const folder = folderList[randomFolder]
     folder.insertNote(nota)
   }
@@ -290,7 +290,7 @@ const createTestIds = () => {
     const id = uuidv4()
     pruebas.push(id)
   }
-  return pruebas
+  return pruebas 
 }
 
 const testNotes = createTestNotes()
@@ -298,6 +298,7 @@ const testNotes = createTestNotes()
 const testIds = createTestIds()
 
 export const findNotesFunction = (_req: Request, res: Response) => {
+  const resultados: DoubleLinkedList<Notes | null> = new DoubleLinkedList<Notes>
   let start = Date.now()
   for (let i = 0; i < 600000; i++) {
     const testFind = testIds[i]
@@ -392,31 +393,34 @@ export const bstFunction = (_req: Request, res: Response) => {
 
 export const ConjuntoDisjuntoFunction = (_req: Request, res: Response) => {
   let start = Date.now()
-  let objectData = 10
-  const conjuntosDisjuntos = new ConjuntoDisjunto()
+  let objectData = 10000
+  const conjuntosDisjuntos = new ConjuntoDisjunto()  
 
   // Insertar a la estructura
-  for (let i = 0; i < objectData; i++) {
+  for(let i = 0; i < objectData; i++){
     const folder: NotesandFolder = {
       idNota: i,
       titulo: 'Nota de prueba',
       descripcion: 'Esta es una nota de prueba',
-      idFolder: i,
-      idCarpeta: i,
-      nombre: 'Carpeta de prueba'
+      idFolder:i,
+      idCarpeta:i,
+      nombre: 'Carpeta de prueba',
     }
     conjuntosDisjuntos.agregarNotaACarpeta(folder.idNota, folder.idCarpeta)
   }
 
+
   // Cambiar nota de carpeta
-  for (let i = 0; i < objectData; i++) {
-    conjuntosDisjuntos.cambiarCarpetaDeNota(i, Math.floor(Math.random() * 101))
+  for(let i = 0; i < objectData; i++){
+    conjuntosDisjuntos.cambiarCarpetaDeNota(i,Math.floor(Math.random() * 101 ))
   }
 
   // // Obtener carpeta de nota
   // for(let i = 0; i < objectData; i++){
   // conjuntosDisjuntos.obtenerCarpetaDeNota(i)
   // }
+
+
 
   let timeTaken = Date.now() - start
   res.json({
