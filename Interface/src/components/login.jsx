@@ -20,7 +20,7 @@ export function Login() {
         setAuth(true)
         user.getIdToken().then((idToken) => {
           setToken(idToken)
-          // updateToken(idToken)
+          updateToken(idToken)
         })
       } else {
         console.log('user not signed ')
