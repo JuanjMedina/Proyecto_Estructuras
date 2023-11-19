@@ -8,7 +8,6 @@ import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority
 import { AVLTree } from '../../../Structures/AVL/Avl'
 import { BinarySearchTree } from '../../../Structures/BST/Bst'
 import { ConjuntoDisjunto } from '../../../Structures/ConjuntosDisjuntos/Disjoinset'
-
 export const stackFunction = (_req: Request, res: Response) => {
   class record {
     stack: Stack<cambio> = new Stack<cambio>()
@@ -299,10 +298,8 @@ const testNotes = createTestNotes()
 const testIds = createTestIds()
 
 export const findNotesFunction = (_req: Request, res: Response) => {
-  const resultados: DoubleLinkedList<Notes | null> =
-    new DoubleLinkedList<Notes>()
   let start = Date.now()
-  for (let i = 0; i < 100000; i++) {
+  for (let i = 0; i < 600000; i++) {
     const testFind = testIds[i]
     for (let j = 0; j < 100; j++) {
       const testFolder = testNotes[j]
@@ -312,7 +309,7 @@ export const findNotesFunction = (_req: Request, res: Response) => {
   }
   let timeTaken = Date.now() - start
   res.json({
-    message: 'Total time taken : ' + timeTaken + ' milliseconds'
+    message: 'Total time taken : ' + timeTaken + ' milliseconds',
   })
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
@@ -330,7 +327,7 @@ export const bstFunction = (_req: Request, res: Response) => {
 
   const start = Date.now()
   const objectData1 = 100
-  const objectData2 = 1000
+  const objectData2 = 100
   const carpetas: Folder[] = []
   const notas: Notes[] = []
 
