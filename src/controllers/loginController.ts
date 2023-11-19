@@ -6,7 +6,10 @@ export class LoginController {
     this.notesModel = notesModel
   }
 
-  getTokentoUser = async (_req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ message: 'ok' })
+  getTokentoUser = async (req: Request, res: Response): Promise<void> => {
+    // const token = req.cookies
+    const token = req.cookies.token
+    console.log(token)
+    res.status(200).json({ message: 'ok', token })
   }
 }

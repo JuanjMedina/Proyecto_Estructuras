@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { createTestRouter } from './Test_Entrega/routerTest'
 import { createUserRouter } from './routers/routesUser'
@@ -12,6 +13,7 @@ export const createApp = ({ notesModel }: { notesModel: any }): void => {
   fireBaseConfig()
 
   app.use(cors())
+  app.use(cookieParser())
 
   app.use(json())
 

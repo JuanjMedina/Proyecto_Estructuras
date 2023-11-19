@@ -2,6 +2,8 @@ import { verifyToken } from '../config/firebase-confi'
 import { Request as ExpressRequest, Response, NextFunction } from 'express'
 import { notesModel } from '../models/mySql/notesModel'
 // import { createAccessToken } from '../libs/jwt'
+// import { decode } from 'jsonwebtoken'
+// import { createAccessToken } from '../libs/jwt'
 
 interface Request extends ExpressRequest {
   user?: any
@@ -19,14 +21,8 @@ export class Middleware {
       if (decodeValue === false) throw new Error('Invalid Token')
       req.user = decodeValue
       await notesModel.createUser({ data: decodeValue })
-      // const createToken = await createAccessToken({ id: decodeValue.user_id })
-      // console.log(createToken)
-      // res.cookie('token', createToken, {
-      //   httpOnly: true,
-      //   secure: true,
-      //   sameSite: 'strict'
-      // })
       // res.cookie('token', decodeValue.user_id)
+      res.cookie('token', 'token', { maxAge: 900000, httpOnly: true })
       next()
     } catch (e) {
       res.status(500).json({ message: 'internal server error' })

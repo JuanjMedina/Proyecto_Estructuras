@@ -5,7 +5,7 @@ import { Stack } from '../../../Structures/pila/stack'
 import { Folder, Notes, NotesandFolder } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
 import { PriorityQueue } from '../../../Structures/ColaPrioritaria/QueuePriority'
-import { AVLTree } from '../../../Structures/AVL/Avl'
+// import { AVLTree } from '../../../Structures/AVL/Avl'
 import { BinarySearchTree } from '../../../Structures/BST/Bst'
 import { ConjuntoDisjunto } from '../../../Structures/ConjuntosDisjuntos/Disjoinset'
 export const stackFunction = (_req: Request, res: Response) => {
@@ -124,43 +124,43 @@ export const queueFunction = (_req: Request, res: Response) => {
   res.json({ message: 'Total time taken : ' + timeTaken + ' milliseconds' })
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
-const crearNotas = (): Notes => {
-  const nota: Notes = {
-    idNota: uuidv4(),
-    titulo: 'Nota de prueba',
-    descripcion: 'Esta es una nota de prueba',
-    fecha: '2023-10-08',
-    fechaEliminacion: null, // Inicialmente no está en la papelera
-    idFolder: null
-  }
-  return nota
-}
-class AvlFolder {
-  notaPrueba: Notes = crearNotas()
-  comparadorNotas = (a: Notes, b: Notes): number => {
-    if (a.idNota < b.idNota) return -1
-    else if (a.idNota > b.idNota) return 1
-    return 0
-  }
-  AVLTree = new AVLTree<Notes>(this.comparadorNotas)
-  value: number = 0
-  constructor(value: number) {
-    this.value = value
-  }
+// const crearNotas = (): Notes => {
+//   const nota: Notes = {
+//     idNota: uuidv4(),
+//     titulo: 'Nota de prueba',
+//     descripcion: 'Esta es una nota de prueba',
+//     fecha: '2023-10-08',
+//     fechaEliminacion: null, // Inicialmente no está en la papelera
+//     idFolder: null
+//   }
+//   return nota
+// }
+// class AvlFolder {
+//   notaPrueba: Notes = crearNotas()
+//   comparadorNotas = (a: Notes, b: Notes): number => {
+//     if (a.idNota < b.idNota) return -1
+//     else if (a.idNota > b.idNota) return 1
+//     return 0
+//   }
+//   AVLTree = new AVLTree<Notes>(this.comparadorNotas)
+//   value: number = 0
+//   constructor(value: number) {
+//     this.value = value
+//   }
 
-  insertNote(nota: Notes) {
-    this.AVLTree.insert(nota)
-  }
-  findNote(idNota: string): Notes | null {
-    this.notaPrueba.idNota = idNota
-    const notaRespuesta = this.AVLTree.find(this.AVLTree.root, this.notaPrueba)
-    if (notaRespuesta) {
-      return notaRespuesta.value
-    } else {
-      return null
-    }
-  }
-}
+//   insertNote(nota: Notes) {
+//     this.AVLTree.insert(nota)
+//   }
+//   findNote(idNota: string): Notes | null {
+//     this.notaPrueba.idNota = idNota
+//     const notaRespuesta = this.AVLTree.find(this.AVLTree.root, this.notaPrueba)
+//     if (notaRespuesta) {
+//       return notaRespuesta.value
+//     } else {
+//       return null
+//     }
+//   }
+// }
 
 export const doubleLinkedListFunction = (_req: Request, res: Response) => {
   class Folder {
@@ -266,53 +266,53 @@ export const priorityQueueFunction = (_req: Request, res: Response) => {
   console.log('Total time taken : ' + timeTaken + ' milliseconds')
 }
 
-const createTestNotes = () => {
-  const folderList: AvlFolder[] = []
-  const carpetas: number = 100
-  const tasks: number = 900
-  for (let i = 0; i < carpetas; i++) {
-    const folder = new AvlFolder(i)
-    folderList.push(folder)
-  }
-  for (let i = 0; i < tasks; i++) {
-    const nota: Notes = crearNotas() as Notes
-    const randomFolder = Math.floor(Math.random() * carpetas)
-    const folder = folderList[randomFolder]
-    folder.insertNote(nota)
-  }
-  return folderList
-}
+// const createTestNotes = () => {
+//   const folderList: AvlFolder[] = []
+//   const carpetas: number = 100
+//   const tasks: number = 900
+//   for (let i = 0; i < carpetas; i++) {
+//     const folder = new AvlFolder(i)
+//     folderList.push(folder)
+//   }
+//   for (let i = 0; i < tasks; i++) {
+//     const nota: Notes = crearNotas() as Notes
+//     const randomFolder = Math.floor(Math.random() * carpetas)
+//     const folder = folderList[randomFolder]
+//     folder.insertNote(nota)
+//   }
+//   return folderList
+// }
 
-const createTestIds = () => {
-  const n: number = 1000
-  const pruebas: string[] = []
-  for (let i = 0; i < n; i++) {
-    const id = uuidv4()
-    pruebas.push(id)
-  }
-  return pruebas
-}
+// const createTestIds = () => {
+//   const n: number = 1000
+//   const pruebas: string[] = []
+//   for (let i = 0; i < n; i++) {
+//     const id = uuidv4()
+//     pruebas.push(id)
+//   }
+//   return pruebas
+// }
 
-const testNotes = createTestNotes()
+// const testNotes = createTestNotes()
 
-const testIds = createTestIds()
+// const testIds = createTestIds()
 
-export const findNotesFunction = (_req: Request, res: Response) => {
-  let start = Date.now()
-  for (let i = 0; i < 600000; i++) {
-    const testFind = testIds[i]
-    for (let j = 0; j < 100; j++) {
-      const testFolder = testNotes[j]
-      const res = testFolder.findNote(testFind)
-      resultados.addEnd(res)
-    }
-  }
-  let timeTaken = Date.now() - start
-  res.json({
-    message: 'Total time taken : ' + timeTaken + ' milliseconds',
-  })
-  console.log('Total time taken : ' + timeTaken + ' milliseconds')
-}
+// export const findNotesFunction = (_req: Request, res: Response) => {
+//   let start = Date.now()
+//   for (let i = 0; i < 600000; i++) {
+//     const testFind = testIds[i]
+//     for (let j = 0; j < 100; j++) {
+//       const testFolder = testNotes[j]
+//       const res = testFolder.findNote(testFind)
+//       resultados.addEnd(res)
+//     }
+//   }
+//   let timeTaken = Date.now() - start
+//   res.json({
+//     message: 'Total time taken : ' + timeTaken + ' milliseconds',
+//   })
+//   console.log('Total time taken : ' + timeTaken + ' milliseconds')
+// }
 
 export const bstFunction = (_req: Request, res: Response) => {
   function generateRandomDate() {
