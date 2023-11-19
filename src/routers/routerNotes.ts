@@ -14,6 +14,13 @@ export const createNotesRouter = ({
 
   notesRouter.get('/', middlewareUser.decodeToken, notesController.getAllNotes)
 
+  notesRouter.get(
+    '/historial',
+    middlewareUser.decodeToken,
+    middlewareUser.validateToken,
+    notesController.getHistorial
+  )
+
   notesRouter.post('/', notesController.createNote)
 
   notesRouter.get('/:id')
