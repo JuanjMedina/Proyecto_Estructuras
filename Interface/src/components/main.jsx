@@ -1,4 +1,4 @@
-import { auth } from 'firebase-admin'
+
 import { useAuth } from '../context/authContext'
 
 export function MainPage() {

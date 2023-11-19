@@ -54,11 +54,3 @@ export interface NoteModel {
   descripcionNota: string
   idCarpeta: number
 }
-
-export interface notesHistory {
-  id_nota: number
-  tema_nota: string
-  fecha_cambios: string
-  id_carpeta: number
-  id_usuario: number
-}

@@ -178,29 +178,6 @@ export class notesModel {
     }
   }
 
-  static async getHistorial ({
-    data
-  }: {
-    data: UserModel
-  }): Promise<RowDataPacket[][]> {
-    const { uid } = data
-    const connectiondb = await connect()
-    if (connectiondb != null) {
-      try {
-        const query: string =
-        'select * from task_glide.getNotesHistorial where  getNotesHistorial.id_usuario =(?); '
-        const [result] = await connectiondb.query<RowDataPacket[][]>(query, [
-          uid
-        ])
-        return result
-      } catch (e) {
-        throw new Error('Error al consultar las notas')
-      }
-    } else {
-      throw new Error('Error al conectar con la base de datos')
-    }
-  }
-
   static async getAllNotesandFolders (): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {

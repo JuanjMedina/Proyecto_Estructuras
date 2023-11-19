@@ -39,6 +39,7 @@ export class Middleware {
       console.log(token)
       next()
     } catch (e) {
+      console.log(e)
       res.status(500).json({ message: 'internal server error' })
     }
   }
