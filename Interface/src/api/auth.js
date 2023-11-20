@@ -1,8 +1,18 @@
-import axios from 'axios'
-export const loginRequest = async (Token) => {
-  return await axios.get('http://localhost:3000/login/', {
-    headers: {
-      Authorization: `Bearer ${Token}`
+import axios from "axios"
+const API = 'http://localhost:3000'
+export const loginRequest = async ({token}) => {
+  return await axios.get(`${API}/login/`, {
+   headers:{ 
+    Authorization: `Bearer ${token}`
+   }
+  })
+  
+}
+
+export const notesRequest = async ({token})=> {
+  return await axios.get(`${API}/notes/`, {
+    headers:{
+      Authorization: `Bearer ${token}`
     }
   })
 }
