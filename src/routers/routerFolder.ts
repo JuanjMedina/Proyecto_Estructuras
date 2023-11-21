@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { FolderController } from '../controllers/folderController'
+import { middlewareUser } from '../middellwares'
 
 export const createFolderRouter = ({
   notesModel
@@ -15,6 +16,12 @@ export const createFolderRouter = ({
   notesRouter.post('/', folderController.createFolder)
 
   notesRouter.delete('/:id', folderController.deleteFolder)
+
+  notesRouter.get(
+    '/NotesandFolders',
+    middlewareUser.validateToken,
+    folderController.getAllNotesAndFolders
+  )
 
   return notesRouter
 }

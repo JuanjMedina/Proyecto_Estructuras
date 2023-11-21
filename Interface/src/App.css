@@ -1,42 +1,107 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.sidebar {
+  color: #fff;
+  background-color: #dbd4d0;
+  height: 100vh;
 }
-
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  padding: 10px 10px 20px 10px;
+  background: #dbd4d0;
+  gap: 20px;
+  height: 10vh;
+  
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.logo-icon {
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background-color: rgba(28, 18, 41, 0.88);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+.logo-text > h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 500;
+}
+.logo-text > p {
+  font-size: 0.8rem;
+  margin: 0;
+  font-weight: 300;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Menu-bar{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 1rem;
+  position: relative;
+  background: #DBD4D0;
+}
+.toggle-btn {
+  position: absolute;
+  left: 0; /* Cambia 'right' a 'left' */
+  cursor: pointer;
+  color: #000;
+
+
+  padding: 5px;
+  background: #DBD4D0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.toggle-btn:hover{
+  color: #fff;
+}
+.ant-layout-sider-trigger{
+  display: none;
+}
+.Layout-sidebar{
+  position: relative;
 }
 
-.card {
-  padding: 2em;
+.background-sidebar{
+  background-color: #DBD4D0;
+  padding: 0;
+  display: block;
 }
-
-.read-the-docs {
-  color: #888;
+.footer-sidebar{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 6vh;
+}
+.footer-sidebar-collapsed{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search{
+  background: #DBD4D0;
+  height: 4vh;
+  padding: 4px;
+}
+.PrincipalPage{
+  width: 100vw;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+.Aside{
+  flex-basis: 60px;
+  padding-right: 20px;
+}
+.main-content{
+  width: 100%;
 }

@@ -5,7 +5,8 @@ import {
   UserModel,
   FolderModel,
   NoteModel,
-  dataNoteandFolder
+  dataNoteandFolder,
+  FolderMap
 } from '../../types'
 import { RowDataPacket } from 'mysql2'
 
@@ -29,7 +30,7 @@ const connect = async (): Promise<Connection | undefined> => {
 }
 
 export class notesModel {
-  static async createUser ({ data }: { data: UserModel }): Promise<void> {
+  static async createUser({ data }: { data: UserModel }): Promise<void> {
     const { uid, name, email } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -52,7 +53,7 @@ export class notesModel {
     }
   }
 
-  static async getAllUser (): Promise<RowDataPacket[][]> {
+  static async getAllUser(): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -68,7 +69,7 @@ export class notesModel {
     }
   }
 
-  static async deleteUser ({ id }: { id: UUID }): Promise<RowDataPacket[][]> {
+  static async deleteUser({ id }: { id: UUID }): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -87,7 +88,7 @@ export class notesModel {
     }
   }
 
-  static async getAllFolders (): Promise<RowDataPacket[][]> {
+  static async getAllFolders(): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -102,7 +103,7 @@ export class notesModel {
     }
   }
 
-  static async createFolder ({ data }: { data: FolderModel }): Promise<void> {
+  static async createFolder({ data }: { data: FolderModel }): Promise<void> {
     const { nombre } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -118,7 +119,7 @@ export class notesModel {
     }
   }
 
-  static async deleteFolder ({ id }: { id: number }): Promise<void> {
+  static async deleteFolder({ id }: { id: number }): Promise<void> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -133,7 +134,7 @@ export class notesModel {
     }
   }
 
-  static async createNote ({ data }: { data: NoteModel }): Promise<void> {
+  static async createNote({ data }: { data: NoteModel }): Promise<void> {
     const { temaNota, fechaNota, descripcionNota, idCarpeta } = data
     const connectiondb = await connect()
 
@@ -155,7 +156,7 @@ export class notesModel {
     }
   }
 
-  static async getAllNotes ({
+  static async getAllNotes({
     data
   }: {
     data: UserModel
@@ -178,7 +179,7 @@ export class notesModel {
     }
   }
 
-  static async getAllNotesandFolders (): Promise<RowDataPacket[][]> {
+  static async getAllNotesandFolders(): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -195,7 +196,62 @@ export class notesModel {
     }
   }
 
-  static async updateNoteandFolder ({
+  static async getAllNotesandFoldersbyUser({
+    data
+  }: {
+    data: UserModel
+  }): Promise<FolderMap[]> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      const idUser = data.uid
+      try {
+        const query: string =
+          'select * from task_glide.getCarpetNotes where  getCarpetNotes.id_usuario = (?)'
+        const [result] = await connectiondb.query<RowDataPacket[]>(query, [
+          idUser
+        ])
+        const folderMap = new Map<number, FolderMap>()
+
+        // Iterar sobre el resultado y mapear las notas a las carpetas correspondientes
+        result.forEach((row) => {
+          const folderId = row.id_carpeta
+          const folderName = row.nombre_carpeta
+
+          // Si la carpeta aún no está en el mapa, agréguela con una lista vacía de notas
+          if (!folderMap.has(folderId)) {
+            folderMap.set(folderId, {
+              id_carpeta: folderId,
+              nombre_carpeta: folderName,
+              notas: []
+            })
+          }
+
+          // Agregar la nota a la carpeta correspondiente en el mapa
+          const note = {
+            ID_Nota: row.ID_Nota,
+            tema_nota: row.tema_nota,
+            id_usuario: row.id_usuario
+          }
+
+          const folder = folderMap.get(folderId)
+          if (folder != null) {
+            folder.notas.push(note)
+          }
+        })
+
+        // Convertir el mapa a un array de carpetas
+        const folders = Array.from(folderMap.values())
+
+        return folders
+      } catch (e) {
+        throw new Error('Error al consultar las notas y carpetas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async updateNoteandFolder({
     dataNoteandFolder
   }: {
     dataNoteandFolder: dataNoteandFolder

@@ -1,5 +1,9 @@
 import { PriorityQueue } from '../../Structures/ColaPrioritaria/QueuePriority'
-import { Request, Response } from 'express'
+import { Request as ExpressRequest, Response } from 'express'
+
+interface Request extends ExpressRequest {
+  user?: any
+}
 export class FolderController {
   notesModel: any
   constructor ({ notesModel }: { notesModel: any }) {
@@ -31,6 +35,20 @@ export class FolderController {
     try {
       await this.notesModel.deleteFolder({ id })
       res.status(200).json({ message: 'folder deleted' })
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
+    }
+  }
+
+  getAllNotesAndFolders = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      const data = await this.notesModel.getAllNotesandFoldersbyUser({
+        data: req.user
+      })
+      res.status(200).json(data)
     } catch (e) {
       res.status(400).json({ message: 'error' })
     }

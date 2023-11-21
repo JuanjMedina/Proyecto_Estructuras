@@ -67,3 +67,6 @@ Content-Type: application/json
     "email": "",
     "JSWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 }
+
+### obtener todos los folders y notas 
+GET http://localhost:3000/folders/NotesandFolders

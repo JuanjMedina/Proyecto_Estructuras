@@ -6,7 +6,7 @@ interface Request extends ExpressRequest {
 }
 
 export class Middleware {
-  async decodeToken(
+  async decodeToken (
     req: Request,
     res: Response,
     next: NextFunction
@@ -24,7 +24,7 @@ export class Middleware {
     }
   }
 
-  async validateToken(
+  async validateToken (
     req: Request,
     res: Response,
     next: NextFunction
