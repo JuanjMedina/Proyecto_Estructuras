@@ -6,7 +6,7 @@ interface Request extends ExpressRequest {
 
 export class LoginController {
   notesModel: any
-  constructor({ notesModel }: { notesModel: any }) {
+  constructor ({ notesModel }: { notesModel: any }) {
     this.notesModel = notesModel
   }
 

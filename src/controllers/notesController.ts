@@ -1,5 +1,7 @@
 import { NextFunction, Request as ExpressRequest, Response } from 'express'
 import { ConjuntoDisjunto } from '../../Structures/ConjuntosDisjuntos/Disjoinset'
+import { AVLTree } from '../../Structures/AVL/Avl'
+
 interface Request extends ExpressRequest {
   user?: any
 }
@@ -42,17 +44,36 @@ export class NotesController {
           dataObject.id_nota,
           dataObject.id_carpeta
         )
+        console.log(dataObject)
       }
-      console.log(conjuntoDisjunto)
+      // console.log(conjuntoDisjunto)
       const result = await this.notesModel.updateNoteandFolder({
         //! falta logica
         dataNoteandFolder: req.body
       })
       conjuntoDisjunto.cambiarCarpetaDeNota(idNota, idCarpeta)
-      console.log(conjuntoDisjunto)
+      // console.log(conjuntoDisjunto)
       res.status(200).json(result)
     } catch (e) {
       res.status(400).json({ message: 'error' })
+    }
+  }
+
+  findNoteById = async (req: Request, res: Response): Promise <void> => {
+    try {
+      const { idNota } = req.body
+      const FolderandNotes = await this.notesModel.getAllNotesandFolders()
+      const comparadorIds = (a: number, b: number): number => {
+        return a - b
+      }
+      const AVL = new AVLTree<number>(comparadorIds as (a: number, b: number) => number)
+      for (const dataObject of FolderandNotes) {
+        AVL.insert(dataObject.id_nota)
+      }
+      const result = AVL.search(idNota)
+      res.status(200).json(result)
+    } catch (e) {
+      res.status(400).json({ message: 'la embarraste jeronimo' })
     }
   }
 }
