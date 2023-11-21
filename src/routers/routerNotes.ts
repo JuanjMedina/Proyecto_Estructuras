@@ -12,7 +12,7 @@ export const createNotesRouter = ({
   const notesController = new NotesController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.get('/', middlewareUser.decodeToken, notesController.getAllNotes)
+  notesRouter.get('/', middlewareUser.validateToken, notesController.getAllNotes)
 
   notesRouter.post('/', notesController.createNote)
 

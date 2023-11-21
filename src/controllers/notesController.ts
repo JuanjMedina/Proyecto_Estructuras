@@ -14,10 +14,6 @@ export class NotesController {
 
   getAllNotes = async (req: Request, res: Response): Promise<void> => {
     try {
-      const data = req.user
-      const { name, uid, email } = data
-      console.log(name, uid, email)
-      await this.notesModel.createUser({ data: req.user })
       const allNotes = await this.notesModel.getAllNotes({ data: req.user })
       res.status(200).json(allNotes)
     } catch (e) {

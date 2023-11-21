@@ -1,4 +1,8 @@
-import { Request, Response } from 'express'
+import { Request as ExpressRequest, Response } from 'express'
+
+interface Request extends ExpressRequest {
+  user?: any
+}
 
 export class LoginController {
   notesModel: any
@@ -6,10 +10,8 @@ export class LoginController {
     this.notesModel = notesModel
   }
 
-  getTokentoUser = async (req: Request, res: Response): Promise<void> => {
-    // const token = req.cookies
-    const token = req.cookies.token
-    console.log(token)
-    res.status(200).json({ message: 'ok', token })
+  getTokentoUser = async (_req: Request, res: Response): Promise<void> => {
+    res.cookie('token', 'token')
+    res.status(200).json({ message: 'ok' })
   }
 }

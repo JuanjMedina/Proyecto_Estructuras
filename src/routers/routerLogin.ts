@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { LoginController } from '../controllers/loginController'
-
+ import { middlewareUser } from '../middellwares'
 export const createLoginRouter = ({
   notesModel
 }: {
@@ -10,7 +10,11 @@ export const createLoginRouter = ({
   const loginController = new LoginController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.post('/', loginController.getTokentoUser)
+  notesRouter.get(
+    '/',
+    middlewareUser.decodeToken,
+    loginController.getTokentoUser
+  )
 
   return notesRouter
 }

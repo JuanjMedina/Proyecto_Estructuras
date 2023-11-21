@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useContext, useCallback } from 'react'
-import { loginRequest } from '../api/auth'
+import { createContext, useState, useContext, useRef } from 'react'
 export const AuthContext = createContext()
 
 export const useAuth = () => {
@@ -13,44 +12,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuth, setIsAuth] = useState(false)
   const [token, setToken] = useState('')
-
-  // const signup = async (Token) => {
-  //   try {
-  //     const res = await loginRequest({ Token })
-  //     console.log('res', res)
-  //     if (res.status === 200) {
-  //       setUser(res.data)
-  //       setIsAuth(true)
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
-  const signupUser= useCallback(async({token})=> {
-    try {
-      const res = await loginRequest({ token })
-      console.log('res', res)
-      if (res.status === 200) {
-        setUser(res.data)
-        setIsAuth(true)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  })
+  const TokenUser = useRef('')
 
   const updateToken = (token) => {
     setToken(token)
-    
+    setIsAuth(true)
+    TokenUser.current = token
   }
   return (
     <AuthContext.Provider
       value={{
-        signupUser,
         user,
         isAuth,
         updateToken,
-        token
+        token,
+        TokenUser
       }}
     >
       {children}
