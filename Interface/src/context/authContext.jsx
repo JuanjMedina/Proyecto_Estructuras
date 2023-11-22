@@ -12,12 +12,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuth, setIsAuth] = useState(false)
   const [token, setToken] = useState('')
-  const TokenUser = useRef('')
 
   const updateToken = (token) => {
     setToken(token)
     setIsAuth(true)
-    TokenUser.current = token
+  }
+  const removeToken = () => {
+    setToken('')
+    setIsAuth(false)
+    
   }
   return (
     <AuthContext.Provider
@@ -26,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         isAuth,
         updateToken,
         token,
-        TokenUser
+        removeToken
       }}
     >
       {children}

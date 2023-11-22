@@ -1,14 +1,17 @@
+import '../login.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuthentication } from '../hooks/authentication'
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 import { useAuth } from '../context/authContext'
 import { loginRequest } from '../api/auth'
+import { FacebookOutlined, GoogleOutlined } from '@ant-design/icons'
 
 export function Login() {
   const { token, isAuth } = useAuth()
-  
-  const { Auth,updateAuth } = useAuthentication()
+
+  const { Auth, updateAuth } = useAuthentication()
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -16,7 +19,7 @@ export function Login() {
       try {
         const res = await loginRequest({ token })
         if (res.status === 200) {
-          console.log(res.data)
+          updateAuth(true)
         }
       } catch (e) {
         console.log(e)
@@ -26,10 +29,10 @@ export function Login() {
   }, [token])
 
   useEffect(() => {
-    if (Auth) {
+    if (Auth === true) {
       navigate('/')
     }
-  }, [Auth, navigate])
+  }, [Auth])
 
   const loginWithGoogle = () => {
     const auth = getAuth()
@@ -45,8 +48,42 @@ export function Login() {
   }
 
   return (
-    <div className="app">
-      <button onClick={loginWithGoogle}>Iniciar sesión con Google</button>
-    </div>
+    <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+      <form className="form-login">
+        <h3>TaskGlide Login</h3>
+
+        <label htmlFor="username" className="username">
+          Username
+        </label>
+        <input
+          type="text"
+          placeholder="Email or Phone"
+          id="username"
+          className="input-username"
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          placeholder="Password"
+          id="password"
+          className="input-username"
+        />
+
+        <button className="button-login">Log In</button>
+        <div className="social">
+          <div onClick={loginWithGoogle} className="go">
+            <GoogleOutlined />
+          </div>
+          <div className="fb">
+            <FacebookOutlined />
+          </div>
+        </div>
+      </form>
+    </>
   )
 }
