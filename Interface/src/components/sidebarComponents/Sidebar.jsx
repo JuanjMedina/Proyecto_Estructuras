@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { Header } from 'antd/es/layout/layout'
 import { SearchComponent } from '../sidebarComponents/Search'
 import FooterSidebar from './FooterSidebar'
-const {  Sider } = Layout
+const { Sider } = Layout
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const {
@@ -15,14 +15,14 @@ function Sidebar() {
   } = theme.useToken()
 
   return (
-    <Layout style={{ background: '#DBD4D0' }} className='Layout-sidebar'>
-      <Sider collapsed={collapsed}  className="sidebar">
+    <Layout style={{ background: '#DBD4D0' }} className="Layout-sidebar">
+      <Sider collapsed={collapsed} className="sidebar">
         <Logo collapsed={collapsed} />
-        <SearchComponent collapsed={collapsed}/>
+        <SearchComponent collapsed={collapsed} />
         <MenuList collapsed={collapsed} />
-        <FooterSidebar collapsed={collapsed}  />
+        <FooterSidebar collapsed={collapsed} />
       </Sider>
-      <Layout >
+      <Layout>
         <Header
           style={{ padding: 0, backgroundColor: colorbackgroundContainer }}
         >
@@ -30,7 +30,7 @@ function Sidebar() {
             type="text"
             className="toggle-btn"
             onClick={() => setCollapsed(!collapsed)}
-            icon={collapsed ? <MenuOutlined /> : <MenuUnfoldOutlined c/>}
+            icon={collapsed ? <MenuOutlined /> : <MenuUnfoldOutlined c />}
           />
         </Header>
       </Layout>

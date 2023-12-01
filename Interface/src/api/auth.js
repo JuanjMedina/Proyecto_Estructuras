@@ -23,3 +23,11 @@ export const notesandFoldersRequest = async ({ token }) => {
     }
   })
 }
+
+export const notesData = async ({ token }) => {
+  return await axios.get(`${API}/notes/`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}

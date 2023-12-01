@@ -19,7 +19,6 @@ const MenuList = () => {
       try {
         const res = await notesandFoldersRequest({token:data})
         setTodos(res.data)
-        console.log(res.data)
         
       } catch (e) {
         console.log(e)
@@ -44,7 +43,7 @@ const MenuList = () => {
           <Menu.SubMenu key={item.id_carpeta} title={item.nombre_carpeta} icon={<FolderOutlined />}>
             {item.notas.map((notas)=> {
               return (
-                <Menu.Item key={notas.ID_Nota} icon={<BookOutlined />}>
+                <Menu.Item key={notas.ID_Nota} icon={<BookOutlined /> }>
                   {notas.tema_nota}
                 </Menu.Item>
               )

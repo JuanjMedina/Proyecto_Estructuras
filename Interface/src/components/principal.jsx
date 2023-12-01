@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { notesRequest } from '../api/auth'
 import Cookies from 'js-cookie'
 import Sidebar from './sidebarComponents/Sidebar'
+import MainContent from '../MainContent'
 
 export function MainPage() {
   const [todos, setTodos] = useState([])
@@ -23,13 +24,12 @@ export function MainPage() {
 
   return (
     <div className="PrincipalPage">
-      <section className='Aside'>
-        <Sidebar /> 
+      <section className="Aside">
+        <Sidebar />
       </section>
-      <section className='main-content'>
-        <h1>Hola TO do</h1>
+      <section className="main-content">
+        <MainContent />
       </section>
     </div>
-
   )
 }

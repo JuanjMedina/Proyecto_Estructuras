@@ -1,0 +1,153 @@
+html{
+  font-family: sans-serif;
+}
+
+.container{
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #FAF6F0;
+
+}
+
+.box-style-1{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 143px;
+  height: 109px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #C9E4CA;
+  cursor: pointer;
+}
+
+.box-style-1:hover {
+  background-color: #8eaf8e; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+
+.box-style-2{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 152px;
+  height: 154px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #F0B7A4;
+  cursor: pointer;
+  
+}
+
+.box-style-2:hover {
+  background-color: #c79888;; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-3{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 153px;
+  height: 92px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #A9B9D9;  
+  cursor: pointer;
+}
+
+.box-style-3:hover {
+  background-color: #8d9bb6; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-4{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 171px;
+  height: 116px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #E9E2CF;
+  cursor: pointer;
+}
+
+.box-style-4:hover {
+  background-color: #c0b9a5; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-5{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 133px;
+  height: 117px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #F4EACF;
+  cursor: pointer;
+}
+
+.box-style-5:hover {
+  background-color: rgb(156, 146, 121); /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-6{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 147px;
+  height: 185px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #A3D9CE;
+  cursor: pointer;
+}
+
+.box-style-6:hover {
+  background-color: #80a8a0; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-7{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 141px;
+  height: 113px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #F3D3C1;
+  cursor: pointer;
+}
+
+.box-style-7:hover {
+  background-color: #dec2b2; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.box-style-8{
+  position: absolute;
+  top: 20;
+  left: 20;
+  width: 145px;
+  height: 141px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #ECC8D1;
+  cursor: pointer;
+}
+
+.box-style-8:hover {
+  background-color: #d0b0b8; /* Cambia el color de fondo al pasar el ratón sobre la caja */
+}
+
+.note-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 25px;
+}

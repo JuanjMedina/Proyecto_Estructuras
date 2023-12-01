@@ -34,6 +34,7 @@ DELETE http://localhost:3000/folders/5
 GET http://localhost:3000/notes/
 
 
+
 ### crear una nota 
 POST http://localhost:3000/notes/
 Content-Type: application/json
