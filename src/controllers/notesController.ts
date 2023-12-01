@@ -1,6 +1,8 @@
 import { NextFunction, Request as ExpressRequest, Response } from 'express'
 import { ConjuntoDisjunto } from '../../Structures/ConjuntosDisjuntos/Disjoinset'
 import { AVLTree } from '../../Structures/AVL/Avl'
+import { Stack } from '../../Structures/pila/stack'
+import { notesHistory } from '../types'
 
 interface Request extends ExpressRequest {
   user?: any
@@ -8,7 +10,7 @@ interface Request extends ExpressRequest {
 
 export class NotesController {
   notesModel: any
-  constructor ({ notesModel }: { notesModel: any }) {
+  constructor({ notesModel }: { notesModel: any }) {
     this.notesModel = notesModel
   }
 
@@ -59,14 +61,16 @@ export class NotesController {
     }
   }
 
-  findNoteById = async (req: Request, res: Response): Promise <void> => {
+  findNoteById = async (req: Request, res: Response): Promise<void> => {
     try {
       const { idNota } = req.body
       const FolderandNotes = await this.notesModel.getAllNotesandFolders()
       const comparadorIds = (a: number, b: number): number => {
         return a - b
       }
-      const AVL = new AVLTree<number>(comparadorIds as (a: number, b: number) => number)
+      const AVL = new AVLTree<number>(
+        comparadorIds as (a: number, b: number) => number
+      )
       for (const dataObject of FolderandNotes) {
         AVL.insert(dataObject.id_nota)
       }
@@ -74,6 +78,25 @@ export class NotesController {
       res.status(200).json(result)
     } catch (e) {
       res.status(400).json({ message: 'la embarraste jeronimo' })
+    }
+  }
+
+  getNotesHistory = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const historialNotas = await this.notesModel.getHistorial({
+        data: req.user
+      })
+      const stackHistorial = new Stack<notesHistory>()
+      for (const dataObject of historialNotas) {
+        stackHistorial.push(dataObject)
+      }
+      const historialNotasArray = []
+      while (stackHistorial.size() > 0) {
+        historialNotasArray.push(stackHistorial.pop())
+      }
+      res.status(200).json(historialNotasArray)
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
     }
   }
 }

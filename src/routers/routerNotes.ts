@@ -23,6 +23,8 @@ export const createNotesRouter = ({
 
   notesRouter.delete('/:id')
 
+  notesRouter.get('/notesHistory', notesController.getNotesHistory)
+
   notesRouter.patch('/NotesandFolders', notesController.updateNote)//! conjunto disjunto de notas y carpetas
 
   notesRouter.patch('/find', notesController.findNoteById)

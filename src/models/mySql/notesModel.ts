@@ -30,7 +30,7 @@ const connect = async (): Promise<Connection | undefined> => {
 }
 
 export class notesModel {
-  static async createUser({ data }: { data: UserModel }): Promise<void> {
+  static async createUser ({ data }: { data: UserModel }): Promise<void> {
     const { uid, name, email } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -53,7 +53,7 @@ export class notesModel {
     }
   }
 
-  static async getAllUser(): Promise<RowDataPacket[][]> {
+  static async getAllUser (): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -69,7 +69,7 @@ export class notesModel {
     }
   }
 
-  static async deleteUser({ id }: { id: UUID }): Promise<RowDataPacket[][]> {
+  static async deleteUser ({ id }: { id: UUID }): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -88,7 +88,7 @@ export class notesModel {
     }
   }
 
-  static async getAllFolders(): Promise<RowDataPacket[][]> {
+  static async getAllFolders (): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -103,7 +103,7 @@ export class notesModel {
     }
   }
 
-  static async createFolder({ data }: { data: FolderModel }): Promise<void> {
+  static async createFolder ({ data }: { data: FolderModel }): Promise<void> {
     const { nombre } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
@@ -119,7 +119,7 @@ export class notesModel {
     }
   }
 
-  static async deleteFolder({ id }: { id: number }): Promise<void> {
+  static async deleteFolder ({ id }: { id: number }): Promise<void> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -134,7 +134,7 @@ export class notesModel {
     }
   }
 
-  static async createNote({ data }: { data: NoteModel }): Promise<void> {
+  static async createNote ({ data }: { data: NoteModel }): Promise<void> {
     const { temaNota, fechaNota, descripcionNota, idCarpeta } = data
     const connectiondb = await connect()
 
@@ -156,7 +156,7 @@ export class notesModel {
     }
   }
 
-  static async getAllNotes({
+  static async getAllNotes ({
     data
   }: {
     data: UserModel
@@ -179,7 +179,7 @@ export class notesModel {
     }
   }
 
-  static async getAllNotesandFolders(): Promise<RowDataPacket[][]> {
+  static async getAllNotesandFolders (): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
@@ -196,7 +196,7 @@ export class notesModel {
     }
   }
 
-  static async getAllNotesandFoldersbyUser({
+  static async getAllNotesandFoldersbyUser ({
     data
   }: {
     data: UserModel
@@ -251,7 +251,7 @@ export class notesModel {
     }
   }
 
-  static async updateNoteandFolder({
+  static async updateNoteandFolder ({
     dataNoteandFolder
   }: {
     dataNoteandFolder: dataNoteandFolder
@@ -269,6 +269,21 @@ export class notesModel {
         return result
       } catch (e) {
         throw new Error('Error al actualizar la nota')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async getHistorial (): Promise<RowDataPacket[][]> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string = 'select * from task_glide.getNotesHistorial;'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        return result
+      } catch (e) {
+        throw new Error('Error al consultar las notas')
       }
     } else {
       throw new Error('Error al conectar con la base de datos')
