@@ -3,7 +3,7 @@ import { Login } from './components/login'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/authContext'
 import { MainPage } from './components/principal'
-import MainContent from './MainContent'
+import History from './History'
 function App() {
   return (
     <AuthProvider>
@@ -11,7 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<MainContent />} />
+          <Route path="/test" element={<History />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

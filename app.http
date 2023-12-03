@@ -70,5 +70,5 @@ Content-Type: application/json
 }
 
 ### obtener todos los folders y notas 
-
+###Obtener el historial de notas
 GET http://localhost:3000/notes/notesHistory

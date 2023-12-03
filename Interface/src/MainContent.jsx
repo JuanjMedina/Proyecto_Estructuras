@@ -6,8 +6,9 @@ import { notesData } from './api/auth.js'
 import Box from './components/box2.jsx'
 import './MainContent.css'
 import Cookies from 'js-cookie'
+import History from './History.jsx'
 
-function MainContent() {
+function MainContent({historialVisible}) {
   const [todos,setTodos]= useState([])
   const data = Cookies.get('token')
   
@@ -90,6 +91,7 @@ function MainContent() {
   return (
     <main>
       <div className="container">
+        {historialVisible && <History />}
         {results.map((note) => (
           <Box
             key={note.id_nota}

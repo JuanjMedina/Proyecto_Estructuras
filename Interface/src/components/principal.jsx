@@ -6,6 +6,11 @@ import Sidebar from './sidebarComponents/Sidebar'
 import MainContent from '../MainContent'
 
 export function MainPage() {
+  const [historialVisible, setHistorialVisible] = useState(false)
+
+  const toggleHistorial = () => {
+    setHistorialVisible(!historialVisible)
+  }
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
 
@@ -25,10 +30,10 @@ export function MainPage() {
   return (
     <div className="PrincipalPage">
       <section className="Aside">
-        <Sidebar />
+        <Sidebar toggleHistorial={toggleHistorial} />
       </section>
       <section className="main-content">
-        <MainContent />
+        <MainContent historialVisible={historialVisible} />
       </section>
     </div>
   )
