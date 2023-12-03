@@ -9,7 +9,7 @@ import { Header } from 'antd/es/layout/layout'
 import { SearchComponent } from '../sidebarComponents/Search'
 import FooterSidebar from './FooterSidebar'
 const { Sider } = Layout
-function Sidebar({ toggleHistorial,toggleFolder,toggleNote }) {
+function Sidebar({ toggleHistorial,toggleFolder,toggleNote,setChangeFolderNote }) {
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorbackgroundContainer }
@@ -26,6 +26,7 @@ function Sidebar({ toggleHistorial,toggleFolder,toggleNote }) {
           toggleHistorial={toggleHistorial}
           toggleFolder={toggleFolder}
           toggleNote={toggleNote}
+          setChangeFolderNote={setChangeFolderNote}
         />
       </Sider>
       <Layout>

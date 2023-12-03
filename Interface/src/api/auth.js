@@ -84,3 +84,6 @@ export const createNote = async ({
     }
   )
 }
+
+
+export const getNotesId
