@@ -25,7 +25,7 @@ import Cookies from 'js-cookie'
 //   }
 // ]
 
-export default function History() {
+export default function History({toggleHistorial}) {
   const token = Cookies.get('token')
   const [closed, setClosed] = useState(false)
   const [data, setData] = useState([])
@@ -47,9 +47,10 @@ export default function History() {
     }
   }, [token])
 
-  const closedHistory = () => {
-    setClosed(true)
-  }
+  // const closedHistory = () => {
+  //   // setClosed(true)
+  //   toggleHistorial
+  // }
   return (
     <section className="Section__History">
       <div className={`History ${closed ? 'closed' : ''}`}>
@@ -57,7 +58,7 @@ export default function History() {
           icon={faX}
           className="icon__close"
           size="sm"
-          onClick={closedHistory}
+          onClick={toggleHistorial}
         />
         <div className="History__header">
           <h2 className="History__header__title">Historial</h2>

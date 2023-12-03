@@ -10,7 +10,7 @@ interface Request extends ExpressRequest {
 
 export class NotesController {
   notesModel: any
-  constructor({ notesModel }: { notesModel: any }) {
+  constructor ({ notesModel }: { notesModel: any }) {
     this.notesModel = notesModel
   }
 

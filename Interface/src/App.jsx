@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/authContext'
 import { MainPage } from './components/principal'
 import Folder from './Folder'
+import ChangeNotas from './changeNotas'
+import NoteFormPage from './components/noteForm'
 function App() {
   return (
     <AuthProvider>
@@ -11,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<Folder />} />
+          <Route path="/test" element={<NoteFormPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -43,7 +43,7 @@ Content-Type: application/json
     "temaNota":"Nota-estructuras",
     "fechaNota":"2021-10-10",
     "descripcionNota":"Proyecto estructuras",
-    "idCarpeta":6
+    "idCarpeta":16
 }
 ### Prueba 
 GET http://localhost:3000/test/priorityQueue

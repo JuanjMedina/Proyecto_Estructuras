@@ -41,7 +41,12 @@ export function MainPage() {
         />
       </section>
       <section className="main-content">
-        <MainContent historialVisible={historialVisible} folderVisible={folderVisible} />
+        <MainContent
+          historialVisible={historialVisible}
+          folderVisible={folderVisible}
+          toggleHistorial={toggleHistorial}
+          toggleFolder={toggleFolder}
+        />
       </section>
     </div>
   )

@@ -11,7 +11,11 @@ export const createFolderRouter = ({
   const folderController = new FolderController({ notesModel })
   const notesRouter = Router()
 
-  notesRouter.get('/', folderController.getAllFolders)
+  notesRouter.get(
+    '/',
+    middlewareUser.validateToken,
+    folderController.getAllFolders
+  )
 
   notesRouter.post(
     '/',

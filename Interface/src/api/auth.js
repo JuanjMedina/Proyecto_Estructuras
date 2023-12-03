@@ -52,3 +52,35 @@ export const historyData = async ({ token }) => {
     }
   })
 }
+
+export const getAllFolders = async ({ token }) => {
+  return await axios.get(`${API}/folders/`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+export const changeNoteFolder = async ({ idNota, idCarpeta }) => {
+  return await axios.patch(`${API}/notes/NotesandFolders`, {
+    idNota,
+    idCarpeta
+  })
+}
+
+export const createNote = async ({
+  temaNota,
+  fechaNota,
+  descripcionNota,
+  idCarpeta
+}) => {
+  return await axios.post(
+    `${API}/notes/`,
+    { temaNota, fechaNota, descripcionNota, idCarpeta },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+}
