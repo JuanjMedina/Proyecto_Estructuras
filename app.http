@@ -72,3 +72,11 @@ Content-Type: application/json
 ### obtener todos los folders y notas 
 
 GET http://localhost:3000/notes/notesHistory
+
+# Buscar nota por Id
+
+PATCH http://localhost:3000/notes/find
+Content-Type: application/json
+{
+    "idNota":100
+}
