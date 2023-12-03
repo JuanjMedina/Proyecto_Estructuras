@@ -8,12 +8,17 @@ import MainContent from '../MainContent'
 export function MainPage() {
   const [historialVisible, setHistorialVisible] = useState(false)
   const [folderVisible, setFolderVisible] = useState(false)
+  const [noteVisible , setNoteVisible] = useState(false)
 
   const toggleHistorial = () => {
     setHistorialVisible(!historialVisible)
   }
   const toggleFolder = () => {
     setFolderVisible(!folderVisible)
+  }
+
+  const toggleNote = () => {
+    setNoteVisible(!noteVisible)
   }
 
   const [todos, setTodos] = useState([])
@@ -38,6 +43,7 @@ export function MainPage() {
         <Sidebar
           toggleHistorial={toggleHistorial}
           toggleFolder={toggleFolder}
+          toggleNote={toggleNote}
         />
       </section>
       <section className="main-content">
@@ -46,6 +52,7 @@ export function MainPage() {
           folderVisible={folderVisible}
           toggleHistorial={toggleHistorial}
           toggleFolder={toggleFolder}
+          noteVisible={noteVisible}
         />
       </section>
     </div>

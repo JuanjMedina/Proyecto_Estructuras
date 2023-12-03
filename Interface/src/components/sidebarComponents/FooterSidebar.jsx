@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, Layout } from 'antd'
 import {
+  FileAddOutlined,
   FolderAddOutlined,
   HistoryOutlined,
   LogoutOutlined
@@ -13,7 +14,7 @@ import { useAuth } from '../../context/authContext'
 
 const { Footer } = Layout
 
-const FooterSidebar = ({ collapsed,toggleHistorial,toggleFolder}) => {
+const FooterSidebar = ({ collapsed,toggleHistorial,toggleFolder,toggleNote}) => {
   const { updateAuth } = useAuthentication()
   const { removeToken } = useAuth()
   
@@ -41,6 +42,7 @@ const FooterSidebar = ({ collapsed,toggleHistorial,toggleFolder}) => {
       <div
         className={collapsed ? 'footer-sidebar-collapsed' : 'footer-sidebar'}
       >
+        <Button type="text" icon={<FileAddOutlined /> } onClick={toggleNote}/>
         <Button type="text" icon={<FolderAddOutlined />} onClick={toggleFolder}/>
         <Button type="text" icon={<HistoryOutlined />} onClick={toggleHistorial}/>
         <Button type="text" icon={<LogoutOutlined />} onClick={handleSingOut} />
