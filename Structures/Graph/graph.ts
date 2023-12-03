@@ -76,6 +76,7 @@ export class Graph<T> {
     const destinationNode = this.addNode(destination)
 
     sourceNode.addAdjacent(destinationNode)
+    destinationNode.addAdjacent(sourceNode)
   }
   /**
      * Remove an edge between two nodes
@@ -100,27 +101,30 @@ export class Graph<T> {
      * @param {Map<T, boolean>} visited
      * @returns
      */
-  private depthFirstSearchAux (node: Node<T>, visited: Map<T, boolean>): void {
+
+  private depthFirstSearchAux (node: Node<T>, visited: Map<T, boolean>, result: T[]): void {
     if (node == null) return
 
     visited.set(node.data, true)
-
-    console.log(node.data)
+    result.push(node.data)
 
     node.adjacent.forEach((item) => {
       if (!visited.has(item.data)) {
-        this.depthFirstSearchAux(item, visited)
+        this.depthFirstSearchAux(item, visited, result)
       }
     })
   }
 
-  depthFirstSearch (): void {
+  depthFirstSearch (start: T): T[] | null {
     const visited: Map<T, boolean> = new Map()
-    this.nodes.forEach((node) => {
-      if (!visited.has(node.data)) {
-        this.depthFirstSearchAux(node, visited)
-      }
-    })
+    const startNode = this.nodes.get(start)
+    if (startNode == null) {
+      return null
+    }
+    const result: T[] = []
+    this.depthFirstSearchAux(startNode, visited, result)
+    console.log(result)
+    return result
   }
 
   /**
@@ -186,6 +190,7 @@ graph.addEdge(1, 2)
 graph.addEdge(2, 3)
 graph.addEdge(3, 5)
 graph.addEdge(5, 8)
-console.log(graph)
-graph.depthFirstSearch()
-graph.breadthFirstSearch()
+graph.addEdge(4, 6)
+graph.depthFirstSearch(5)
+graph.depthFirstSearch(7)
+// graph.breadthFirstSearch()

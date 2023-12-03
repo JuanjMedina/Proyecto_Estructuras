@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Node = void 0;
+exports.Graph = exports.Node = void 0;
 var queue_1 = require("../cola/queue");
 var Node = /** @class */ (function () {
     function Node(data, comparator) {
@@ -67,6 +67,7 @@ var Graph = /** @class */ (function () {
         var sourceNode = this.addNode(source);
         var destinationNode = this.addNode(destination);
         sourceNode.addAdjacent(destinationNode);
+        destinationNode.addAdjacent(sourceNode);
     };
     /**
        * Remove an edge between two nodes
@@ -88,26 +89,28 @@ var Graph = /** @class */ (function () {
        * @param {Map<T, boolean>} visited
        * @returns
        */
-    Graph.prototype.depthFirstSearchAux = function (node, visited) {
+    Graph.prototype.depthFirstSearchAux = function (node, visited, result) {
         var _this = this;
         if (node == null)
             return;
         visited.set(node.data, true);
-        console.log(node.data);
+        result.push(node.data);
         node.adjacent.forEach(function (item) {
             if (!visited.has(item.data)) {
-                _this.depthFirstSearchAux(item, visited);
+                _this.depthFirstSearchAux(item, visited, result);
             }
         });
     };
-    Graph.prototype.depthFirstSearch = function () {
-        var _this = this;
+    Graph.prototype.depthFirstSearch = function (start) {
         var visited = new Map();
-        this.nodes.forEach(function (node) {
-            if (!visited.has(node.data)) {
-                _this.depthFirstSearchAux(node, visited);
-            }
-        });
+        var startNode = this.nodes.get(start);
+        if (startNode == null) {
+            return null;
+        }
+        var result = [];
+        this.depthFirstSearchAux(startNode, visited, result);
+        console.log(result);
+        return result;
     };
     /**
        * Breadth-first search
@@ -145,6 +148,7 @@ var Graph = /** @class */ (function () {
     };
     return Graph;
 }());
+exports.Graph = Graph;
 function comparator(a, b) {
     if (a < b)
         return -1;
@@ -167,6 +171,7 @@ graph.addEdge(1, 2);
 graph.addEdge(2, 3);
 graph.addEdge(3, 5);
 graph.addEdge(5, 8);
-console.log(graph);
-graph.depthFirstSearch();
-graph.breadthFirstSearch();
+graph.addEdge(4, 6);
+graph.depthFirstSearch(5);
+graph.depthFirstSearch(7);
+// graph.breadthFirstSearch()
