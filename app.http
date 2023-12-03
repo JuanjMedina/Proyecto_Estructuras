@@ -88,7 +88,7 @@ PATCH http://localhost:3000/notes/findString
 Content-Type: application/json
 
 {
-    "stringBusqueda":"biolo"
+    "stringBusqueda":"F"
 }
 
 ### Verifica que reunion existe

@@ -566,3 +566,8 @@
   border-color: #1890ff;      /* Cambia el color del borde en hover */
   color: #fff;                /* Cambia el color del texto en hover */
 }
+
+html, body {
+  background: #faf6f0;
+  overflow: auto;
+}

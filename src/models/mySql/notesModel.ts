@@ -14,7 +14,7 @@ const DEFAULT_CONFIG = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: 'aguacate2',
+  password: 'root',
   database: 'task_glide'
 }
 
@@ -286,7 +286,7 @@ export class notesModel {
     if (connectiondb != null) {
       try {
         for (const id of ids) {
-          const query: string = 'SELECT id_nota,tema_nota,fecha_nota,descripcion_nota,notas.id_carpeta,BIN_TO_UUID(usuarios.id_usuario) AS id_usuario FROM notas INNER JOIN carpetas ON notas.id_carpeta = carpetas.id_carpeta INNER JOIN carpeta_usuario ON carpetas.id_carpeta = carpeta_usuario.id_carpeta INNER JOIN usuarios ON carpeta_usuario.id_usuario = usuarios.id_usuario WHERE id_nota = (?);'
+          const query: string = 'SELECT id_nota,tema_nota,fecha_nota,descripcion_nota,notas.id_carpeta,usuarios.id_usuario AS id_usuario FROM task_glide.notas INNER JOIN task_glide.carpetas ON notas.id_carpeta = carpetas.id_carpeta  INNER JOIN task_glide.carpeta_usuario ON carpetas.id_carpeta = carpeta_usuario.id_carpeta  INNER JOIN task_glide.usuarios ON carpeta_usuario.id_usuario = usuarios.id_usuario where id_nota=(?)'
           const [result] = await connectiondb.query<RowDataPacket[]>(query, [id])
           if (result.length > 0) {
             notes.push(...result)

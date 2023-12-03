@@ -84,3 +84,15 @@ export const createNote = async ({
     }
   )
 }
+
+export const getNotebyString = async ({ stringBusqueda }) => {
+  return await axios.patch(
+    `${API}/notes/findString/`,
+    { stringBusqueda },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+}
