@@ -73,10 +73,15 @@ Content-Type: application/json
 
 GET http://localhost:3000/notes/notesHistory
 
-# Buscar nota por Id
+### Buscar nota por Id
 
 PATCH http://localhost:3000/notes/find
 Content-Type: application/json
+
 {
     "idNota":100
 }
+
+### Test Conexión
+
+GET http://localhost:3000/notes/showNotes

@@ -29,5 +29,7 @@ export const createNotesRouter = ({
 
   notesRouter.patch('/find', notesController.findNoteById)
 
+  notesRouter.get('/showNotes', notesController.testNotes)
+
   return notesRouter
 }

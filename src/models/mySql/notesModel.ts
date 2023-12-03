@@ -251,6 +251,27 @@ export class notesModel {
     }
   }
 
+  static async getNotesByIds (ids: number[]): Promise<RowDataPacket[]> {
+    const connectiondb = await connect()
+    const notes: RowDataPacket[] = []
+    if (connectiondb != null) {
+      try {
+        for (const id of ids) {
+          const query: string = 'SELECT * FROM notas WHERE id_nota = ?;'
+          const [result] = await connectiondb.query<RowDataPacket[]>(query, [id])
+          if (result.length > 0) {
+            notes.push(...result)
+          }
+        }
+        return notes
+      } catch (e) {
+        throw new Error('Error al consultar las notas y carpetas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
   static async updateNoteandFolder ({
     dataNoteandFolder
   }: {
