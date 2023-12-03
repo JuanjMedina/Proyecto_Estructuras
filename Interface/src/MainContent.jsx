@@ -9,8 +9,9 @@ import './MainContent.css'
 import Cookies from 'js-cookie'
 import History from './History.jsx'
 import Folder from './Folder.jsx'
+import NoteFormPage from './components/noteForm.jsx'
 
-function MainContent({ historialVisible ,folderVisible,toggleHistorial}) {
+function MainContent({ historialVisible ,folderVisible,toggleHistorial,noteVisible}) {
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
 
@@ -94,6 +95,7 @@ function MainContent({ historialVisible ,folderVisible,toggleHistorial}) {
       <div className="container">
         {historialVisible && <History toggleHistorial={toggleHistorial} />}
         {folderVisible && <Folder/>}
+        {noteVisible && <NoteFormPage />}
         {results.map((note) => (
           <Box
             key={note.id_nota}
