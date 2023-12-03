@@ -70,5 +70,23 @@ Content-Type: application/json
 }
 
 ### obtener todos los folders y notas 
-###Obtener el historial de notas
+
 GET http://localhost:3000/notes/notesHistory
+
+### Buscar nota por Id
+
+PATCH http://localhost:3000/notes/find
+Content-Type: application/json
+
+{
+    "idNota":15
+}
+
+### Buscar nota por String
+
+PATCH http://localhost:3000/notes/findString
+Content-Type: application/json
+
+{
+    "stringBusqueda":"biolo"
+}

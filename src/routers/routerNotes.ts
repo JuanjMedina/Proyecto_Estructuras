@@ -33,5 +33,7 @@ export const createNotesRouter = ({
 
   notesRouter.patch('/find', notesController.findNoteById)
 
+  notesRouter.patch('/findString', notesController.findNoteByString)
+
   return notesRouter
 }

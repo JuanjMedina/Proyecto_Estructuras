@@ -14,7 +14,7 @@ const DEFAULT_CONFIG = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: 'root',
+  password: 'aguacate2',
   database: 'task_glide'
 }
 
@@ -272,6 +272,27 @@ export class notesModel {
         const folders = Array.from(folderMap.values())
 
         return folders
+      } catch (e) {
+        throw new Error('Error al consultar las notas y carpetas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async getNotesByIds (ids: number[]): Promise<RowDataPacket[]> {
+    const connectiondb = await connect()
+    const notes: RowDataPacket[] = []
+    if (connectiondb != null) {
+      try {
+        for (const id of ids) {
+          const query: string = 'SELECT * FROM notas WHERE id_nota = ?;'
+          const [result] = await connectiondb.query<RowDataPacket[]>(query, [id])
+          if (result.length > 0) {
+            notes.push(...result)
+          }
+        }
+        return notes
       } catch (e) {
         throw new Error('Error al consultar las notas y carpetas')
       }
