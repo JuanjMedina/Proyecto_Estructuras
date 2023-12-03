@@ -13,16 +13,20 @@ export class FolderController {
   createFolder = async (req: Request, res: Response): Promise<void> => {
     try {
       const { uid } = req.user
-      const allFolder = await this.notesModel.createFolder({ data: req.body, uid })
+      const allFolder = await this.notesModel.createFolder({
+        data: req.body,
+        uid
+      })
       res.status(200).json(allFolder)
     } catch (e) {
       res.status(400).json({ message: 'error' })
     }
   }
 
-  getAllFolders = async (_req: Request, res: Response): Promise<void> => {
+  getAllFolders = async (req: Request, res: Response): Promise<void> => {
     try {
-      const allFolder = await this.notesModel.getAllFolders()
+      const { uid } = req.user
+      const allFolder = await this.notesModel.getAllFolders({ uid })
       const queue = new PriorityQueue(allFolder)
       const dataFolder = queue.items
       res.status(200).json(dataFolder)

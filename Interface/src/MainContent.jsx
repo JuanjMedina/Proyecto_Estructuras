@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 import History from './History.jsx'
 import Folder from './Folder.jsx'
 
-function MainContent({ historialVisible ,folderVisible}) {
+function MainContent({ historialVisible ,folderVisible,toggleHistorial}) {
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
 
@@ -92,7 +92,7 @@ function MainContent({ historialVisible ,folderVisible}) {
   return (
     <main>
       <div className="container">
-        {historialVisible && <History />}
+        {historialVisible && <History toggleHistorial={toggleHistorial} />}
         {folderVisible && <Folder/>}
         {results.map((note) => (
           <Box

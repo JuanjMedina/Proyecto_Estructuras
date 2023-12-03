@@ -88,12 +88,19 @@ export class notesModel {
     }
   }
 
-  static async getAllFolders (): Promise<RowDataPacket[][]> {
+  static async getAllFolders ({
+    uid
+  }: {
+    uid: string
+  }): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
-        const query: string = 'select * from task_glide.carpetas;'
-        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        const query: string =
+          'select * from task_glide.getallfolders where id_usuario=(?) ;'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query, [
+          uid
+        ])
 
         return result
       } catch (e) {

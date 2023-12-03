@@ -29,7 +29,7 @@ export const createNotesRouter = ({
     notesController.getNotesHistory
   )
 
-  notesRouter.patch('/NotesandFolders', notesController.updateNote) //! conjunto disjunto de notas y carpetas
+  notesRouter.patch('/NotesandFolders', notesController.updateNote)
 
   notesRouter.patch('/find', notesController.findNoteById)
 

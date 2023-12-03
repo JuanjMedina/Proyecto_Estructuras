@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import './App.css'
 import { Input, Button } from 'antd'
@@ -5,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faShare, faX } from '@fortawesome/free-solid-svg-icons'
 import { createFolder } from './api/auth'
 import Cookies from 'js-cookie'
-export default function Folder() {
+export default function Folder({ toggleFolder }) {
   const data = Cookies.get('token')
   const [inputText, setInputText] = useState('')
   const [closed, setClosed] = useState(false)
@@ -31,6 +32,7 @@ export default function Folder() {
   }
 
   const closedFolder = () => {
+    toggleFolder
     setClosed(true)
   }
   return (
