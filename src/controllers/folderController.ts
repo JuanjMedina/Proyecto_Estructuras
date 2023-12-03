@@ -6,13 +6,14 @@ interface Request extends ExpressRequest {
 }
 export class FolderController {
   notesModel: any
-  constructor ({ notesModel }: { notesModel: any }) {
+  constructor({ notesModel }: { notesModel: any }) {
     this.notesModel = notesModel
   }
 
   createFolder = async (req: Request, res: Response): Promise<void> => {
     try {
-      const allFolder = await this.notesModel.createFolder({ data: req.body })
+      const { uid } = req.user
+      const allFolder = await this.notesModel.createFolder({ data: req.body, uid })
       res.status(200).json(allFolder)
     } catch (e) {
       res.status(400).json({ message: 'error' })

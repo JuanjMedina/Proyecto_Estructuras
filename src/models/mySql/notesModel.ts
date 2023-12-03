@@ -94,6 +94,7 @@ export class notesModel {
       try {
         const query: string = 'select * from task_glide.carpetas;'
         const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+
         return result
       } catch (e) {
         throw new Error('Error al consultar las carpetas')
@@ -103,14 +104,35 @@ export class notesModel {
     }
   }
 
-  static async createFolder ({ data }: { data: FolderModel }): Promise<void> {
+  static async createFolder ({
+    data,
+    uid
+  }: {
+    data: FolderModel
+    uid: string
+  }): Promise<void> {
     const { nombre } = data
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
         const query: string =
           'insert into task_glide.carpetas (nombre_carpeta) values (?) '
-        await connectiondb.query<RowDataPacket[][]>(query, nombre)
+        await connectiondb.query<RowDataPacket[]>(query, nombre)
+
+        const query2: string =
+          'select id_carpeta,created from task_glide.carpetas where carpetas.nombre_carpeta=(?) ORDER BY created desc limit 1'
+
+        const [result2] = await connectiondb.query<RowDataPacket[]>(query2, [
+          nombre
+        ])
+
+        const query3: string =
+          'insert into task_glide.carpeta_usuario (id_usuario,id_carpeta) values (?,?)'
+
+        await connectiondb.query<RowDataPacket[]>(query3, [
+          uid,
+          result2[0].id_carpeta
+        ])
       } catch (e) {
         throw new Error('Error al crear la carpeta')
       }
@@ -275,12 +297,20 @@ export class notesModel {
     }
   }
 
-  static async getHistorial (): Promise<RowDataPacket[][]> {
+  static async getHistorial ({
+    data
+  }: {
+    data: UserModel
+  }): Promise<RowDataPacket[][]> {
     const connectiondb = await connect()
     if (connectiondb != null) {
       try {
-        const query: string = 'select * from task_glide.getNotesHistorial;'
-        const [result] = await connectiondb.query<RowDataPacket[][]>(query)
+        const { uid } = data
+        const query: string =
+          'select * from task_glide.getNotesHistorial where id_usuario=(?);'
+        const [result] = await connectiondb.query<RowDataPacket[][]>(query, [
+          uid
+        ])
         return result
       } catch (e) {
         throw new Error('Error al consultar las notas')

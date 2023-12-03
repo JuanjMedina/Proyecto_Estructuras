@@ -13,7 +13,11 @@ export const createFolderRouter = ({
 
   notesRouter.get('/', folderController.getAllFolders)
 
-  notesRouter.post('/', folderController.createFolder)
+  notesRouter.post(
+    '/',
+    middlewareUser.validateToken,
+    folderController.createFolder
+  )
 
   notesRouter.delete('/:id', folderController.deleteFolder)
 
