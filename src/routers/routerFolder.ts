@@ -27,5 +27,7 @@ export const createFolderRouter = ({
     folderController.getAllNotesAndFolders
   )
 
+  notesRouter.get('/checkReunion', folderController.reunionExists)
+
   return notesRouter
 }

@@ -6,7 +6,7 @@ interface Request extends ExpressRequest {
 }
 export class FolderController {
   notesModel: any
-  constructor({ notesModel }: { notesModel: any }) {
+  constructor ({ notesModel }: { notesModel: any }) {
     this.notesModel = notesModel
   }
 
@@ -50,6 +50,16 @@ export class FolderController {
         data: req.user
       })
       res.status(200).json(data)
+    } catch (e) {
+      res.status(400).json({ message: 'error' })
+    }
+  }
+
+  reunionExists = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { idReunion } = req.body
+      this.notesModel.checkReunion(idReunion)
+      res.status(200).json()
     } catch (e) {
       res.status(400).json({ message: 'error' })
     }

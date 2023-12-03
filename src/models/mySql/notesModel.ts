@@ -279,7 +279,7 @@ export class notesModel {
     if (connectiondb != null) {
       try {
         for (const id of ids) {
-          const query: string = 'SELECT * FROM notas WHERE id_nota = ?;'
+          const query: string = 'SELECT id_nota,tema_nota,fecha_nota,descripcion_nota,notas.id_carpeta,BIN_TO_UUID(usuarios.id_usuario) AS id_usuario FROM notas INNER JOIN carpetas ON notas.id_carpeta = carpetas.id_carpeta INNER JOIN carpeta_usuario ON carpetas.id_carpeta = carpeta_usuario.id_carpeta INNER JOIN usuarios ON carpeta_usuario.id_usuario = usuarios.id_usuario WHERE id_nota = (?);'
           const [result] = await connectiondb.query<RowDataPacket[]>(query, [id])
           if (result.length > 0) {
             notes.push(...result)
@@ -335,6 +335,21 @@ export class notesModel {
         return result
       } catch (e) {
         throw new Error('Error al consultar las notas')
+      }
+    } else {
+      throw new Error('Error al conectar con la base de datos')
+    }
+  }
+
+  static async checkReunion (id: number): Promise<void> {
+    const connectiondb = await connect()
+    if (connectiondb != null) {
+      try {
+        const query: string = 'SELECT COUNT(id_reunion) FROM reuniones WHERE id_reunion = (?);'
+        const exists = await connectiondb.query<RowDataPacket[]>(query, [id])
+        console.log(exists)
+      } catch (e) {
+        throw new Error('Error al consultar las notas y carpetas')
       }
     } else {
       throw new Error('Error al conectar con la base de datos')

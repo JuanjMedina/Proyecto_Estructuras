@@ -90,3 +90,12 @@ Content-Type: application/json
 {
     "stringBusqueda":"biolo"
 }
+
+### Verifica que reunion existe
+
+PATCH http://localhost:3000/folders/checkReunion
+Content-Type: application/json
+
+{
+    "idReunion":"2"
+}
