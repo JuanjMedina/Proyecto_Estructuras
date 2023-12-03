@@ -79,9 +79,14 @@ PATCH http://localhost:3000/notes/find
 Content-Type: application/json
 
 {
-    "idNota":100
+    "idNota":15
 }
 
-### Test Conexión
+### Buscar nota por String
 
-GET http://localhost:3000/notes/showNotes
+PATCH http://localhost:3000/notes/findString
+Content-Type: application/json
+
+{
+    "stringBusqueda":"biolo"
+}

@@ -64,6 +64,8 @@ export class NotesController {
   findNoteById = async (req: Request, res: Response): Promise<void> => {
     try {
       const { idNota } = req.body
+      const consultas = []
+      let resultados = []
       const FolderandNotes = await this.notesModel.getAllNotesandFolders()
       const comparadorIds = (a: number, b: number): number => {
         return a - b
@@ -74,46 +76,35 @@ export class NotesController {
       for (const dataObject of FolderandNotes) {
         AVL.insert(dataObject.id_nota)
       }
-      const result = AVL.search(idNota)
-      res.status(200).json(result)
+      if (AVL.search(idNota)) {
+        consultas.push(idNota)
+        resultados = await this.notesModel.getNotesByIds(consultas)
+      }
+      console.log(resultados)
+      res.json(resultados)
     } catch (e) {
-      res.status(400).json({ message: 'la embarraste jeronimo' })
+      res.status(400).json({ message: 'Bad Request' })
     }
   }
 
-  testNotes = async (res: Response): Promise<void> => {
+  findNoteByString = async (req: Request, res: Response): Promise<void> => {
     try {
+      const { stringBusqueda } = req.body
+      const consultas = []
+      let resultados = []
       const FolderandNotes = await this.notesModel.getAllNotesandFolders()
       for (const dataObject of FolderandNotes) {
-        console.log(dataObject.tema_nota)
+        if ((dataObject.tema_nota as string).includes(stringBusqueda)) {
+          consultas.push(dataObject.id_nota)
+          console.log(dataObject.id_nota)
+        }
       }
+      resultados = await this.notesModel.getNotesByIds(consultas)
+      res.status(200).json(resultados)
     } catch (e) {
-      res.status(400).json({ message: 'la embarraste jeronimo' })
+      res.status(400).json({ message: 'Error en la búsqueda' })
     }
   }
-
-  // findNoteByString = async (req: Request, res: Response): Promise<void> => {
-  //   try {
-  //     const { stringBusqueda } = req.body
-  //     const FolderandNotes = await this.notesModel.getAllNotesandFolders()
-  //     const comparadorTitulos = (a: Notes, b: Notes): number => {
-  //       if (a < b) {
-  //         return -1
-  //       }
-  //       return 1
-  //     }
-  //     const AVL = new AVLTree<number>(
-  //       comparadorTitulos as (a: Notes, b: Notes) => number
-  //     )
-  //     for (const dataObject of FolderandNotes) {
-  //       AVL.insert(dataObject.id_nota)
-  //     }
-  //     const result = AVL.search(stringBusqueda)
-  //     res.status(200).json(result)
-  //   } catch (e) {
-  //     res.status(400).json({ message: 'la embarraste jeronimo' })
-  //   }
-  // }
 
   getNotesHistory = async (req: Request, res: Response): Promise<void> => {
     try {
