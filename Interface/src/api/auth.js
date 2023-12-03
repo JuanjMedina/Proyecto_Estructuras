@@ -31,3 +31,24 @@ export const notesData = async ({ token }) => {
     }
   })
 }
+
+export const createFolder = async ({ nombre, idUsuario }) => {
+  return await axios.post(
+    `${API}/folders/`,
+    { nombre },
+    {
+      headers: {
+        Authorization: `Bearer ${idUsuario}`,
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+}
+
+export const historyData = async ({ token }) => {
+  return await axios.get(`${API}/notes/notesHistory`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import '../../App.css'
 import { Button, Layout, theme } from 'antd'
 import { Logo } from '../sidebarComponents/logo'
@@ -8,7 +9,7 @@ import { Header } from 'antd/es/layout/layout'
 import { SearchComponent } from '../sidebarComponents/Search'
 import FooterSidebar from './FooterSidebar'
 const { Sider } = Layout
-function Sidebar() {
+function Sidebar({ toggleHistorial,toggleFolder }) {
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorbackgroundContainer }
@@ -20,7 +21,11 @@ function Sidebar() {
         <Logo collapsed={collapsed} />
         <SearchComponent collapsed={collapsed} />
         <MenuList collapsed={collapsed} />
-        <FooterSidebar collapsed={collapsed} />
+        <FooterSidebar
+          collapsed={collapsed}
+          toggleHistorial={toggleHistorial}
+          toggleFolder={toggleFolder}
+        />
       </Sider>
       <Layout>
         <Header

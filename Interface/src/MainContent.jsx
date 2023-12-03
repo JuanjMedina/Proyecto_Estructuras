@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 //import Box from './components/box'
@@ -6,24 +7,25 @@ import { notesData } from './api/auth.js'
 import Box from './components/box2.jsx'
 import './MainContent.css'
 import Cookies from 'js-cookie'
+import History from './History.jsx'
+import Folder from './Folder.jsx'
 
-function MainContent() {
-  const [todos,setTodos]= useState([])
+function MainContent({ historialVisible ,folderVisible}) {
+  const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
-  
+
   useEffect(() => {
     const getNotes = async () => {
       try {
-        const res = await notesData({token:data})
+        const res = await notesData({ token: data })
         setTodos(res.data)
         console.log(res.data)
-        
       } catch (e) {
         console.log(e)
       }
     }
-  
-    if(data)getNotes()
+
+    if (data) getNotes()
   }, [])
   const results = todos
   // const results = [
@@ -90,13 +92,15 @@ function MainContent() {
   return (
     <main>
       <div className="container">
+        {historialVisible && <History />}
+        {folderVisible && <Folder/>}
         {results.map((note) => (
           <Box
             key={note.id_nota}
             id={note.id_nota}
             tema={note.tema_nota}
             name={`Nota ${note.id_nota}`}
-            styleClass={`box-style-${Math.floor(Math.random() * 7)+1}`}
+            styleClass={`box-style-${Math.floor(Math.random() * 7) + 1}`}
             poster={posters[Math.floor(Math.random() * 6)]}
             text={note.descripcion_nota}
             date={note.fecha_nota}

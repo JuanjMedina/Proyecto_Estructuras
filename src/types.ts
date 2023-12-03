@@ -14,7 +14,7 @@ export interface Folder {
 
 export interface NotesandFolder
   extends Pick<Notes, 'idNota' | 'titulo' | 'descripcion' | 'idFolder'>,
-  Pick<Folder, 'idCarpeta' | 'nombre'> {
+    Pick<Folder, 'idCarpeta' | 'nombre'> {
   idNota: number
   // Puedes agregar propiedades adicionales si es necesario.
 }
@@ -45,7 +45,6 @@ export interface UserInterface {
 
 export interface FolderModel {
   nombre: string
-  idUsuario: UUID
 }
 
 export interface NoteModel {
@@ -65,7 +64,6 @@ export interface FolderMap {
   nombre_carpeta: string
   notas: Note[]
 }
-
 
 export interface notesHistory {
   id_nota: number

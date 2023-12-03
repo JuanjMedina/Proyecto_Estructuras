@@ -20,7 +20,7 @@ POST http://localhost:3000/folders/
 Content-Type: application/json
 
 {
-    "nombre" : "Estructuras",
+    "nombre" : "Diiiiscretas",
     "idUsuario" : "e342a171-6557-11ee-ad06-204ef64c69c6"
 }
 

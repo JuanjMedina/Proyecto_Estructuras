@@ -6,6 +6,16 @@ import Sidebar from './sidebarComponents/Sidebar'
 import MainContent from '../MainContent'
 
 export function MainPage() {
+  const [historialVisible, setHistorialVisible] = useState(false)
+  const [folderVisible, setFolderVisible] = useState(false)
+
+  const toggleHistorial = () => {
+    setHistorialVisible(!historialVisible)
+  }
+  const toggleFolder = () => {
+    setFolderVisible(!folderVisible)
+  }
+
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
 
@@ -25,10 +35,13 @@ export function MainPage() {
   return (
     <div className="PrincipalPage">
       <section className="Aside">
-        <Sidebar />
+        <Sidebar
+          toggleHistorial={toggleHistorial}
+          toggleFolder={toggleFolder}
+        />
       </section>
       <section className="main-content">
-        <MainContent />
+        <MainContent historialVisible={historialVisible} folderVisible={folderVisible} />
       </section>
     </div>
   )
