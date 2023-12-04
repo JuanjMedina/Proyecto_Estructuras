@@ -1,4 +1,4 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faX } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Form, Select } from 'antd'
 import { Option } from 'antd/es/mentions'
@@ -13,6 +13,7 @@ export default function ChangeNotas() {
   const [folders, setFolders] = useState([])
   const data = Cookies.get('token')
   const [finish, setFinish] = useState(false)
+  const [closed, setClosed] = useState(false)
 
   const onFinish = (values) => {
     const idNota = values.note
@@ -45,10 +46,18 @@ export default function ChangeNotas() {
 
     if (data) getNotes()
   }, [data, finish])
-
+  const closedChangeNtotes = ()=> {
+    setClosed(true)
+  }
   return (
-    <section>
+    <section className={`changeNotesFolder${closed ? 'closed' : ''}`}>
       <div className="section__changeNotes">
+        <FontAwesomeIcon
+          icon={faX}
+          className="icon__close"
+          size="sm"
+          onClick={closedChangeNtotes}
+        />
         <div className="History__header">
           <h2 className="History__header__title">Cambiar carpeta</h2>
           <FontAwesomeIcon icon={faUser} className="icon__history" size="xl" />

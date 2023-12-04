@@ -539,6 +539,20 @@
   color: #000;
   height: 250px;
   padding: 25px;
+  
+}
+.changeNotesFolder{
+  width: 350px;
+  height: 250px;
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  margin: auto;
+}
+.changeNotesFolderclosed{
+  display: none;
 }
 
 .section__formNotes {

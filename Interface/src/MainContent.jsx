@@ -11,12 +11,14 @@ import History from './History.jsx'
 import Folder from './Folder.jsx'
 import NoteFormPage from './components/noteForm.jsx'
 import { useAuth } from './context/authContext.jsx'
+import ChangeNotas from './changeNotas.jsx'
 
 function MainContent({
   historialVisible,
   folderVisible,
   toggleHistorial,
-  noteVisible
+  noteVisible,
+  changeNotesFolder
 }) {
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
@@ -33,9 +35,6 @@ function MainContent({
     }
 
     if (data) getNotes()
-    if (dataInput) {
-      console.log('dadada')
-    }
   }, [])
   const results = todos
   // const results = [
@@ -105,7 +104,8 @@ function MainContent({
         {historialVisible && <History toggleHistorial={toggleHistorial} />}
         {folderVisible && <Folder />}
         {noteVisible && <NoteFormPage />}
-        {dataInput.length>0
+        {changeNotesFolder && <ChangeNotas />}
+        {dataInput.length > 0
           ? dataInput.map((note) => (
               <Box
                 key={note.id_nota}

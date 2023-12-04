@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -25,7 +26,7 @@ import Cookies from 'js-cookie'
 //   }
 // ]
 
-export default function History({toggleHistorial}) {
+export default function History({ toggleHistorial }) {
   const token = Cookies.get('token')
   const [closed, setClosed] = useState(false)
   const [data, setData] = useState([])
@@ -47,10 +48,6 @@ export default function History({toggleHistorial}) {
     }
   }, [token])
 
-  // const closedHistory = () => {
-  //   // setClosed(true)
-  //   toggleHistorial
-  // }
   return (
     <section className="Section__History">
       <div className={`History ${closed ? 'closed' : ''}`}>

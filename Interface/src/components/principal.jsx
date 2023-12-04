@@ -8,7 +8,8 @@ import MainContent from '../MainContent'
 export function MainPage() {
   const [historialVisible, setHistorialVisible] = useState(false)
   const [folderVisible, setFolderVisible] = useState(false)
-  const [noteVisible , setNoteVisible] = useState(false)
+  const [noteVisible, setNoteVisible] = useState(false)
+  const [changeNotesFolder, setChangeNotesFolder] = useState(false)
 
   const toggleHistorial = () => {
     setHistorialVisible(!historialVisible)
@@ -19,6 +20,9 @@ export function MainPage() {
 
   const toggleNote = () => {
     setNoteVisible(!noteVisible)
+  }
+  const toggleChangeNotesFolder = () => {
+    setChangeNotesFolder(!changeNotesFolder)
   }
 
   const [todos, setTodos] = useState([])
@@ -44,6 +48,7 @@ export function MainPage() {
           toggleHistorial={toggleHistorial}
           toggleFolder={toggleFolder}
           toggleNote={toggleNote}
+          toggleChangeNotesFolder={toggleChangeNotesFolder}
         />
       </section>
       <section className="main-content">
@@ -53,6 +58,7 @@ export function MainPage() {
           toggleHistorial={toggleHistorial}
           toggleFolder={toggleFolder}
           noteVisible={noteVisible}
+          changeNotesFolder={changeNotesFolder}
         />
       </section>
     </div>

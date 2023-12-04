@@ -1,13 +1,13 @@
-import { useForm } from 'react-hook-form'
 import { Form, Input, Select, Button } from 'antd'
 import { Option } from 'antd/es/mentions'
 import './noteForm.css'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { createNote, getAllFolders } from '../api/auth'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons'
 
-function NoteFormPage() {
-  const { register, handleSubmit, reset, getValues } = useForm()
+function NoteFormPage({toggleFolder}) {
   const [folders, setFolders] = useState([])
   const data = Cookies.get('token')
   const [form] = Form.useForm()
@@ -46,9 +46,20 @@ function NoteFormPage() {
     if (data) getNotes()
   }, [])
 
+  const [closed, setClosed] = useState(false)
+  const closedFolder = () => {
+    toggleFolder
+    setClosed(true)
+  }
+
   return (
     <div className="Major">
       <div className="minor">
+        <FontAwesomeIcon
+            icon={faX}
+            className="close__folder"
+            onClick={closedFolder}
+          />
         <Form onFinish={onFinish}>
           <Form.Item
             name="nombreNota"

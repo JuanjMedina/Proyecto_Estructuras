@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<NoteFormPage />} />
+          <Route path="/test" element={<ChangeNotas />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
