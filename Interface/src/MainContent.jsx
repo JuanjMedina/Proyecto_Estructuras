@@ -10,11 +10,17 @@ import Cookies from 'js-cookie'
 import History from './History.jsx'
 import Folder from './Folder.jsx'
 import NoteFormPage from './components/noteForm.jsx'
+import { useAuth } from './context/authContext.jsx'
 
-function MainContent({ historialVisible ,folderVisible,toggleHistorial,noteVisible}) {
+function MainContent({
+  historialVisible,
+  folderVisible,
+  toggleHistorial,
+  noteVisible
+}) {
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
-
+  const { dataInput } = useAuth()
   useEffect(() => {
     const getNotes = async () => {
       try {
@@ -27,6 +33,9 @@ function MainContent({ historialVisible ,folderVisible,toggleHistorial,noteVisib
     }
 
     if (data) getNotes()
+    if (dataInput) {
+      console.log('dadada')
+    }
   }, [])
   const results = todos
   // const results = [
@@ -94,20 +103,33 @@ function MainContent({ historialVisible ,folderVisible,toggleHistorial,noteVisib
     <main>
       <div className="container">
         {historialVisible && <History toggleHistorial={toggleHistorial} />}
-        {folderVisible && <Folder/>}
+        {folderVisible && <Folder />}
         {noteVisible && <NoteFormPage />}
-        {results.map((note) => (
-          <Box
-            key={note.id_nota}
-            id={note.id_nota}
-            tema={note.tema_nota}
-            name={`Nota ${note.id_nota}`}
-            styleClass={`box-style-${Math.floor(Math.random() * 7) + 1}`}
-            poster={posters[Math.floor(Math.random() * 6)]}
-            text={note.descripcion_nota}
-            date={note.fecha_nota}
-          />
-        ))}
+        {dataInput.length>0
+          ? dataInput.map((note) => (
+              <Box
+                key={note.id_nota}
+                id={note.id_nota}
+                tema={note.tema_nota}
+                name={`Nota ${note.id_nota}`}
+                styleClass={`box-style-${Math.floor(Math.random() * 7) + 1}`}
+                poster={posters[Math.floor(Math.random() * 6)]}
+                text={note.descripcion_nota}
+                date={note.fecha_nota}
+              />
+            ))
+          : results.map((note) => (
+              <Box
+                key={note.id_nota}
+                id={note.id_nota}
+                tema={note.tema_nota}
+                name={`Nota ${note.id_nota}`}
+                styleClass={`box-style-${Math.floor(Math.random() * 7) + 1}`}
+                poster={posters[Math.floor(Math.random() * 6)]}
+                text={note.descripcion_nota}
+                date={note.fecha_nota}
+              />
+            ))}
       </div>
     </main>
   )

@@ -1,20 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { Input, Space } from 'antd'
-import { getNotebyString } from '../../api/auth'
+import { useAuth } from '../../context/authContext'
 
 const { Search } = Input
 
 export const SearchComponent = ({ collapsed }) => {
   const [searchText, setSearchText] = useState('')
+  const { getNotesByStringContext } = useAuth()
 
   const onSearch = async (value, _e, info) => {
     const stringBusqueda = value
     // Realiza la búsqueda
-    const res = await getNotebyString({ stringBusqueda })
+    const res = await getNotesByStringContext({ stringBusqueda })
     console.log(res)
-
-    // Limpia el campo de búsqueda después de la búsqueda
     setSearchText('')
   }
 
