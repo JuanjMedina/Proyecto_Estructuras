@@ -1,0 +1,26 @@
+[
+    {
+        "idNota": 1,
+        "titulo": "Nota 1",
+        "descripcion": "Descripcion de la nota 1",
+        "fecha": "2019-01-01"
+    },
+    {
+        "idNota": 2,
+        "titulo": "Nota 2",
+        "descripcion": "Descripcion de la nota 2",
+        "fecha": "2019-01-01"
+    },
+    {
+        "idNota": 3,
+        "titulo": "Nota 3",
+        "descripcion": "Descripcion de la nota 3",
+        "fecha": "2019-01-01"
+    },
+    {
+        "idNota": 4,
+        "titulo": "Nota 4",
+        "descripcion": "Descripcion de la nota 4",
+        "fecha": "2019-01-01"
+    }
+]

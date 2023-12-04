@@ -1,0 +1,101 @@
+
+### obtener usuarios
+GET http://localhost:3000/user/
+
+### crear usuario
+POST http://localhost:3000/user/
+Content-Type: application/json
+
+{
+    "name": "Juan",
+    "email": "Juan@Unal.edu.co",
+    "telefono": 213131331
+}
+
+### Eliminar un usuario
+DELETE http://localhost:3000/user/e342a171-6557-11ee-ad06-204ef64c69c6
+
+### Crear un folder
+POST http://localhost:3000/folders/
+Content-Type: application/json
+
+{
+    "nombre" : "Diiiiscretas",
+    "idUsuario" : "e342a171-6557-11ee-ad06-204ef64c69c6"
+}
+
+### Obtener folders
+GET http://localhost:3000/folders/
+
+### Eliminar un folder especifico 
+DELETE http://localhost:3000/folders/5
+
+### Obtener todas las notas
+GET http://localhost:3000/notes/
+
+
+
+### crear una nota 
+POST http://localhost:3000/notes/
+Content-Type: application/json
+
+{
+    "temaNota":"Nota-estructuras",
+    "fechaNota":"2021-10-10",
+    "descripcionNota":"Proyecto estructuras",
+    "idCarpeta":16
+}
+### Prueba 
+GET http://localhost:3000/test/priorityQueue
+
+### Obtener todas las notas de una carpeta
+PATCH  http://localhost:3000/notes/NotesandFolders
+Content-Type: application/json
+
+{
+    "idNota":100,
+    "idCarpeta":2
+}
+
+### probar conjuntos disjuntos 
+GET http://localhost:3000/test/conjuntosDisjuntos
+
+### Login JSWT
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "",
+    "JSWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
+
+### obtener todos los folders y notas 
+
+GET http://localhost:3000/notes/notesHistory
+
+### Buscar nota por Id
+
+PATCH http://localhost:3000/notes/find
+Content-Type: application/json
+
+{
+    "idNota":15
+}
+
+### Buscar nota por String
+
+PATCH http://localhost:3000/notes/findString
+Content-Type: application/json
+
+{
+    "stringBusqueda":"F"
+}
+
+### Verifica que reunion existe
+
+PATCH http://localhost:3000/folders/checkReunion
+Content-Type: application/json
+
+{
+    "idReunion":"2"
+}
