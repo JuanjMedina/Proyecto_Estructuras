@@ -9,8 +9,10 @@ import {
 import { useEffect, useState } from 'react'
 import { notesandFoldersRequest } from '../../api/auth'
 import Cookies from 'js-cookie'
+import { useAuth } from '../../context/authContext'
 
 const MenuList = ({ toggleChangeNotesFolder }) => {
+  const { note } = useAuth()
   const [todos, setTodos] = useState([])
   const data = Cookies.get('token')
 
@@ -25,7 +27,7 @@ const MenuList = ({ toggleChangeNotesFolder }) => {
     }
 
     if (data) getNotes()
-  }, [])
+  }, [note,data])
 
   return (
     <Menu mode="inline" className="Menu-bar" selectedKeys={[]}>

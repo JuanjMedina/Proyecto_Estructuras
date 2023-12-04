@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false)
   const [token, setToken] = useState('')
   const [dataInput, setDataInput] = useState([])
+  const[note, setNote] = useState(false)
 
   const updateToken = (token) => {
     setToken(token)
@@ -31,6 +32,13 @@ export const AuthProvider = ({ children }) => {
     return(res.data)
   }
 
+  const noteUpdated = () => {
+    setNote(!note)
+  }
+
+
+
+
  
   return (
     <AuthContext.Provider
@@ -41,7 +49,10 @@ export const AuthProvider = ({ children }) => {
         token,
         removeToken,
         getNotesByStringContext,
-        dataInput
+        dataInput,
+        noteUpdated,
+        note
+
       }}
     >
       {children}

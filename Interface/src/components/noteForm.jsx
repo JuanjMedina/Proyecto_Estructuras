@@ -6,12 +6,15 @@ import { useEffect, useState } from 'react'
 import { createNote, getAllFolders } from '../api/auth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from '../context/authContext'
 
 function NoteFormPage() {
+  const { noteUpdated } = useAuth()
   const [folders, setFolders] = useState([])
   const data = Cookies.get('token')
   const [form] = Form.useForm()
   const [finish, setFinish] = useState(false)
+  const [closed, setClosed] = useState(false)
 
   const onFinish = (values) => {
     console.log(values)
@@ -21,6 +24,8 @@ function NoteFormPage() {
     const idCarpeta = values.folder
     crearNota({ temaNota, fechaNota, descripcionNota, idCarpeta })
     setFinish(!finish)
+    setClosed(true)
+    noteUpdated()
     form.resetFields()
   }
   const crearNota = async ({
@@ -46,20 +51,19 @@ function NoteFormPage() {
     if (data) getNotes()
   }, [])
 
-  const [closed, setClosed] = useState(false)
   const closedFolder = () => {
     setClosed(true)
   }
 
   return (
-    <div className={`Major${closed ?'closed':''}`}>
+    <div className={`Major${closed ? 'closed' : ''}`}>
       <div className="minor">
         <FontAwesomeIcon
-            icon={faX}
-            className="close__folder"
-            onClick={closedFolder}
-            style={{color:'#000'}}
-          />
+          icon={faX}
+          className="close__folder"
+          onClick={closedFolder}
+          style={{ color: '#000' }}
+        />
         <Form onFinish={onFinish}>
           <Form.Item
             name="nombreNota"
