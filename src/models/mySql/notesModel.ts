@@ -235,7 +235,7 @@ export class notesModel {
       const idUser = data.uid
       try {
         const query: string =
-          'select * from task_glide.getCarpetNotes where  getCarpetNotes.id_usuario = (?)'
+          'select * from task_glide.getCarpetNotes where  getCarpetNotes.id_usuario = (?) order by id_carpeta desc'
         const [result] = await connectiondb.query<RowDataPacket[]>(query, [
           idUser
         ])

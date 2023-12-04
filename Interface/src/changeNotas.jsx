@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react'
 // import { getAllFolders } from './api/auth'
 import Cookies from 'js-cookie'
 import { changeNoteFolder, getAllFolders, notesData } from './api/auth'
+import { useAuth } from './context/authContext'
 
 export default function ChangeNotas() {
+  const { noteUpdated } = useAuth()
   const [form] = Form.useForm()
   const [todos, setTodos] = useState([])
   const [folders, setFolders] = useState([])
@@ -26,7 +28,7 @@ export default function ChangeNotas() {
   const changeNote = async ({ idNota, idCarpeta }) => {
     try {
       const res = await changeNoteFolder({ idCarpeta, idNota })
-      console.log(res.data)
+      noteUpdated()
     } catch (e) {
       console.log(e)
     }
