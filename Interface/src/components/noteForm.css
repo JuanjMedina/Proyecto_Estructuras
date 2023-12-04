@@ -30,6 +30,9 @@
     border-radius: 0.375rem; /* Esto representa 6px (0.375 * 16px) */
 }
 
+.Majorclosed{
+    display: none;
+}
 
 .nombre {
     width: 92%;

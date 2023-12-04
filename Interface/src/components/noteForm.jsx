@@ -7,7 +7,7 @@ import { createNote, getAllFolders } from '../api/auth'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
-function NoteFormPage({toggleFolder}) {
+function NoteFormPage() {
   const [folders, setFolders] = useState([])
   const data = Cookies.get('token')
   const [form] = Form.useForm()
@@ -48,17 +48,17 @@ function NoteFormPage({toggleFolder}) {
 
   const [closed, setClosed] = useState(false)
   const closedFolder = () => {
-    toggleFolder
     setClosed(true)
   }
 
   return (
-    <div className="Major">
+    <div className={`Major${closed ?'closed':''}`}>
       <div className="minor">
         <FontAwesomeIcon
             icon={faX}
             className="close__folder"
             onClick={closedFolder}
+            style={{color:'#000'}}
           />
         <Form onFinish={onFinish}>
           <Form.Item

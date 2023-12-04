@@ -550,6 +550,7 @@
   right: 0;
   bottom: 50px;
   margin: auto;
+  z-index: 100;
 }
 .changeNotesFolderclosed{
   display: none;
